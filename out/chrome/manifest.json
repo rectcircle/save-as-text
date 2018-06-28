@@ -1,0 +1,14 @@
+{
+	"name": "Save as Text",
+	"description": "Save the Page as Plain text file",
+	"version": "1.0.0",
+	"permissions": ["contextMenus"],
+	"background": {
+		"scripts": ["background.js"]
+	},
+	"content_scripts": [{
+		"matches": ["<all_urls>"],
+		"js": ["content-scripts.js"]
+	}],
+	"manifest_version": 2
+}
