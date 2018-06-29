@@ -1,0 +1,30 @@
+{
+	"extName": {
+		"message": "Save as Text",
+		"description": "Extension name"
+	},
+	"extDescription": {
+		"message": "Save the Page as Plain text file",
+		"description": "Extension description"
+	},
+	"menuTitle": {
+		"message": "Save the Page as Plain text file",
+		"description": "Context Menus Title"
+	},
+	"showButtonLabel": {
+		"message": "Display button:",
+		"description": "Display button on page"
+	},
+	"setting": {
+		"message": "Setting",
+		"description": "Setting"
+	},
+	"yes": {
+		"message": "Yes",
+		"description": "Yes"
+	},
+	"no": {
+		"message": "No",
+		"description": "No"
+	}
+}

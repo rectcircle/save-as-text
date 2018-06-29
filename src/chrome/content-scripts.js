@@ -1,4 +1,6 @@
 //@@include('../core/saveAsText.js')
+//@@include('../core/iconBase64.js')
+//@@include('../core/addButtonToBody.js')
 
 //监听消息
 chrome.extension.onMessage.addListener(
@@ -8,6 +10,14 @@ chrome.extension.onMessage.addListener(
 			var content = document.body.innerText;
 			saveAsText(fileName, content);
 		}
-
 	}
 );
+
+chrome.extension.sendRequest({
+	action: "isShowButton"
+}, function (response) {
+	if (response.showButton=='true'){
+		addButtonToBody();
+	}
+});
+

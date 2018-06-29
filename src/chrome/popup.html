@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<script src="popup.js"></script>
+	<title>设置是显示悬浮按钮</title>
+<style>
+	body {
+		overflow: hidden;
+		margin: 0px;
+		padding: 0px;
+	}
+ 	fieldset {
+		width: 150px;
+		display: block;
+		margin-bottom: 5px;
+		margin-left: 5px;
+		margin-right: 5px;
+	}
+</style>
+</head>
+
+<body>
+<fieldset>
+	<legend id="settingLegend">设置</legend>
+	<label id="showButtonLabel">是否显示悬浮按钮：</label>
+	<select id="showButton">
+		<option id="yesOption" value="true">是</option>
+		<option id="noOption" value="false" selected="selected">否</option>
+	</select>
+</fieldset>
+</body>
+
+</html>

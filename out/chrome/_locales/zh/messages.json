@@ -1,0 +1,30 @@
+{
+	"extName":{
+		"message":"保存为文本文件",
+		"description":"扩展名"
+	},
+	"extDescription": {
+		"message": "将当前页面保存为文本文件",
+		"description": "扩展描述"
+	},
+	"menuTitle":{
+		"message": "保存当前页面为文本文件",
+		"description": "菜单标题"
+	},
+	"showButtonLabel":{
+		"message": "是否显示悬浮按钮：",
+		"description": "设置页面显示按钮提示语"
+	},
+	"setting":{
+		"message": "设置",
+		"description": "设置"
+	},
+	"yes":{
+		"message": "是",
+		"description": "是"
+	},
+	"no":{
+		"message": "否",
+		"description": "否"
+	}
+}

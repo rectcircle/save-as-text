@@ -3,11 +3,21 @@ var fileinclude = require('gulp-file-include');
 
 
 gulp.task('default', function () {
-	// 将你的默认的任务代码放在这
+	//处理源代码
 	gulp.src('src/**')
 		.pipe(fileinclude({
 			prefix: '//@@',
 			basepath: '@file'
 		}))
 		.pipe(gulp.dest('out/'));
+
+	//处理图片
+	gulp.src('images/**')
+		.pipe(gulp.dest('out/chrome/images'));
 });
+
+gulp.task('watch', function () {
+	gulp.watch('src/**', function () {
+		gulp.run('default');
+	});
+})
