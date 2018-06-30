@@ -1,6 +1,5 @@
 var gulp = require('gulp');
-var fileinclude = require('gulp-file-include');
-
+var fileinclude = require('gulp-file-include'); //文件包含
 
 gulp.task('default', function () {
 	//处理源代码

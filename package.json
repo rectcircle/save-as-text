@@ -12,7 +12,10 @@
   "author": "Rectcircle",
   "license": "MIT",
   "devDependencies": {
+    "browserify": "^16.2.2",
     "gulp": "^3.9.1",
-    "gulp-file-include": "^2.0.1"
-  }
+    "gulp-file-include": "^2.0.1",
+    "minimatch": "^3.0.4"
+  },
+  "dependencies": {}
 }

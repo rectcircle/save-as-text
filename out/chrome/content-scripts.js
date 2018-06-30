@@ -39,6 +39,8 @@ var iconBase64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACq
  */
 function addButtonToBody() {
 	var img = document.createElement('img');
+	//指定id
+	img.id = "__saveAsTextButton__"
 	//指定图片
 	img.src = iconBase64;
 	//配置添加到页面的元素的样式
@@ -55,24 +57,67 @@ function addButtonToBody() {
 		saveAsText(fileName, content);
 	};
 	document.body.appendChild(img);
+	return img
 }
 
-//监听消息
+function handleSelectorAndSave(rule) {
+	var fileName = "";
+	var content = "";
+	if (rule === undefined) {
+		fileName = document.title + ".txt";
+		content = document.body.innerText;
+	} else {
+		if (rule.titleSelector == "") {
+			fileName = document.title;
+		} else {
+			var ele = $(rule.titleSelector)[0];
+			if(ele!=undefined){
+				fileName = ele.innerText;
+			} else {
+				fileName = document.title;
+			}
+		}
+		fileName += ".txt";
+		if (rule.contentSelector == "") {
+			content = document.body.innerText;
+		} else {
+			if ($(rule.contentSelector).length!=0){
+				$(rule.contentSelector).each(function (idx, ele) {
+					content += ele.innerText;
+				});
+			} else {
+				content = document.body.innerText;
+			}
+		}
+	}
+	saveAsText(fileName, content);
+}
+
+//监听菜单发送的请求
 chrome.extension.onMessage.addListener(
 	function (request, sender, sendResponse) {
 		if (request.action === "save-as-text") {
-			var fileName = document.title + ".txt";
-			var content = document.body.innerText;
-			saveAsText(fileName, content);
+			handleSelectorAndSave(request.rule);
 		}
 	}
 );
 
+//按钮处理
+function handleButtonClick() {
+	chrome.extension.sendRequest({
+		action: "getRule",
+		url: window.location.href
+	}, function (response) {
+		handleSelectorAndSave(response.rule);
+	});
+}
+
+//显示悬浮按钮
 chrome.extension.sendRequest({
 	action: "isShowButton"
 }, function (response) {
 	if (response.showButton=='true'){
-		addButtonToBody();
+		var button = addButtonToBody();
+		button.onclick = handleButtonClick;
 	}
 });
-

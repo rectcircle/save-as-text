@@ -39,6 +39,8 @@ var iconBase64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACq
  */
 function addButtonToBody() {
 	var img = document.createElement('img');
+	//指定id
+	img.id = "__saveAsTextButton__"
 	//指定图片
 	img.src = iconBase64;
 	//配置添加到页面的元素的样式
@@ -55,6 +57,7 @@ function addButtonToBody() {
 		saveAsText(fileName, content);
 	};
 	document.body.appendChild(img);
+	return img
 }
 
 addButtonToBody();

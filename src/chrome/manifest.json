@@ -11,9 +11,9 @@
 	},
 	"default_locale": "en",
 
-	"permissions": ["contextMenus"],
+	"permissions": ["contextMenus", "tabs"],
 	"background": {
-		"scripts": ["background.js"]
+		"scripts": ["defaultRule.js", "util.js", "minimatch.js", "background.js"]
 	},
 
 	"browser_action": {
@@ -26,6 +26,6 @@
 
 	"content_scripts": [{
 		"matches": ["<all_urls>"],
-		"js": ["content-scripts.js"]
+		"js": ["jquery-3.3.1.min.js", "content-scripts.js"]
 	}]
 }
