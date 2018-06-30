@@ -12,8 +12,9 @@ window.onload = function () {
 
 	function saveOptions(key) {
 		//设置是否显示悬浮按钮
-		var select = document.getElementById(key);
-		var value = select.children[select.selectedIndex].value;
+		// var select = document.getElementById(key);
+		// var value = select.children[select.selectedIndex].value;
+		var value = getSelectOption(key);
 		localStorage[key] = value;
 	}
 
@@ -22,14 +23,7 @@ window.onload = function () {
 		if (!showButton) {
 			return;
 		}
-		var select = document.getElementById(key);
-		for (var i = 0; i < select.children.length; i++) {
-			var child = select.children[i];
-			if (child.value == value) {
-				child.selected = "true";
-				break;
-			}
-		}
+		setSelectOption(key, value);
 	}
 
 	function addRule(event) {
@@ -40,6 +34,7 @@ window.onload = function () {
 			globPattern: getInputAndClear('globPattern'),
 			titleSelector: getInputAndClear('titleSelector'),
 			contentSelector: getInputAndClear('contentSelector'),
+			buttonFeature: getSelectOption('pageButtonFeature')
 		}
 		var rules = getRules();
 		if (isAdd){
@@ -62,6 +57,7 @@ window.onload = function () {
 			contentHtml += '<td><code>' + rules[i].globPattern + '</code></td>';
 			contentHtml += '<td><code>' + rules[i].titleSelector + '</code></td>';
 			contentHtml += '<td><code>' + rules[i].contentSelector + '</code></td>';
+			contentHtml += '<td><code>' + buttonFeatureToString(rules[i].buttonFeature) + '</code></td>';
 			contentHtml += '<td>'+
 								'<button name="up" data-index="' + i + '">上移</button>' +
 								'<button name="down" data-index="' + i + '">下移</button>' +
@@ -107,6 +103,7 @@ window.onload = function () {
 			document.getElementById("globPattern").value = rules[index].globPattern;
 			document.getElementById("titleSelector").value = rules[index].titleSelector;
 			document.getElementById("contentSelector").value = rules[index].contentSelector;
+			setSelectOption("pageButtonFeature", rules[index].buttonFeature);
 			document.getElementById("addRule").dataset.index = index;
 			document.getElementById("addRule").dataset.add="false";
 			document.getElementById("addRule").innerText = "更新";
@@ -114,6 +111,7 @@ window.onload = function () {
 			document.getElementById("globPattern").value = rules[index].globPattern;
 			document.getElementById("titleSelector").value = rules[index].titleSelector;
 			document.getElementById("contentSelector").value = rules[index].contentSelector;
+			setSelectOption("pageButtonFeature", rules[index].buttonFeature);
 			document.getElementById("addRule").dataset.add = "true";
 			document.getElementById("addRule").innerText = "添加";
 		}

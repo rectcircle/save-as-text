@@ -27,6 +27,13 @@
 	td,th {
 		text-align:center;
 	}
+	input {
+		width: 136px;
+	}
+ 	button { 
+		padding: 1px 4px;
+		margin-right: 1px;
+	}
 </style>
 </head>
 
@@ -52,7 +59,8 @@
 			<th>glob模式</th>
 			<th>标题选择器</th>
 			<th>内容选择器</th>
-			<th>配置</th>
+			<th>格式</th>
+			<th>操作</th>
 		</tr>
 		</thead>
 		<tbody id="ruleContent">
@@ -61,6 +69,11 @@
 	<input type="text" name="globPattern" id="globPattern" placeholder="URL的glob模式匹配">
 	<input type="text" name="titleSelector" id="titleSelector" placeholder="文件名的CSS选择器">
 	<input type="text" name="contentSelector" id="contentSelector" placeholder="文件内容的CSS选择器">
+	<label id="buttonFeatureLabel">按钮保存格式：</label>
+	<select id="pageButtonFeature">
+		<option id="saveText" value="saveText" selected="selected">txt</option>
+		<option id="saveMarkdown" value="saveMarkdown">md</option>
+	</select>
 	<button id="addRule" data-add="true">添加</button>
 </fieldset>
 </body>
