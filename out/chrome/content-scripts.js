@@ -61,28 +61,39 @@ function addButtonToBody() {
 }
 
 /**
- * 选取元素并保存
- * @param {Object} rule 选取元素规则
- * @param {Function} cb DOMElement -> String 将DOM元素转换为字符串的函数
+ * 根据规则获取标题
+ * @param {Object} rule 页面规则
  */
-function handleSelectorAndSave(rule, suffix, cb) {
+function selectTitle(rule){
 	var fileName = "";
-	var content = "";
 	if (rule === undefined) {
-		fileName = document.title + "." + suffix;
-		content = cb(document.body);
+		fileName = document.title;
 	} else {
 		if (rule.titleSelector == "") {
 			fileName = document.title;
 		} else {
 			var ele = $(rule.titleSelector)[0];
-			if(ele!=undefined){
+			if (ele != undefined) {
 				fileName = ele.innerText;
 			} else {
 				fileName = document.title;
 			}
 		}
-		fileName += "." + suffix;
+	}
+	return fileName;
+}
+
+/**
+ * 选取元素并保存
+ * @param {Object} rule 选取元素规则
+ * @param {Function} cb DOMElement -> String 将DOM元素转换为字符串的函数
+ */
+function handleSelectorAndSave(rule, suffix, cb) {
+	var fileName = selectTitle(rule)+"."+suffix;
+	var content = "";
+	if (rule === undefined) {
+		content = cb(document.body);
+	} else {
 		if (rule.contentSelector == "") {
 			content = cb(document.body);
 		} else {
@@ -99,36 +110,9 @@ function handleSelectorAndSave(rule, suffix, cb) {
 }
 
 function handleSelectorAndSaveTxt(rule) {
-	var fileName = "";
-	var content = "";
-	if (rule === undefined) {
-		fileName = document.title + ".txt";
-		content = document.body.innerText;
-	} else {
-		if (rule.titleSelector == "") {
-			fileName = document.title;
-		} else {
-			var ele = $(rule.titleSelector)[0];
-			if(ele!=undefined){
-				fileName = ele.innerText;
-			} else {
-				fileName = document.title;
-			}
-		}
-		fileName += ".txt";
-		if (rule.contentSelector == "") {
-			content = document.body.innerText;
-		} else {
-			if ($(rule.contentSelector).length!=0){
-				$(rule.contentSelector).each(function (idx, ele) {
-					content += ele.innerText;
-				});
-			} else {
-				content = document.body.innerText;
-			}
-		}
-	}
-	saveAsText(fileName, content);
+	handleSelectorAndSave(rule, "txt", function (ele) {
+		return ele.innerText;
+	});
 }
 
 var turndownService = new TurndownService({
@@ -144,6 +128,51 @@ function handleSelectorAndSaveMd(rule) {
 	})
 }
 
+
+function saveSelection(rule) {
+	var fileName = selectTitle(rule)+".txt";
+	var content = window.getSelection().toString();
+	saveAsText(fileName, content);
+}
+
+function createCSSSelectorByEle(ele){
+	var selector = ele.localName;
+	if (ele.id != "") {
+		selector += '#' + ele.id;
+	}
+	if (ele.className != "") {
+		var classNames = ele.className.split(/\s+/);
+		classNames.forEach(function (value) {
+			selector += '.' +value;
+		})
+	}
+	return selector;
+}
+
+function parseSelectionAsTitle() {
+	var userSelection = window.getSelection();
+	if (!userSelection.anchorNode) {
+		return undefined;
+	}
+	var ele = userSelection.anchorNode.parentElement;
+	var selector = createCSSSelectorByEle(ele);
+	return selector;
+}
+
+function parseSelectionAsContent() {
+	var userSelection = window.getSelection();
+	if (!userSelection.anchorNode) {
+		return undefined;
+	}
+	var ele = userSelection.anchorNode.parentElement;
+	while ($(ele).find(userSelection.focusNode.parentElement).length == 0 &&
+			ele != userSelection.focusNode.parentElement) {
+		ele = ele.parentElement;
+	}
+	var selector = createCSSSelectorByEle(ele)
+	return selector;
+}
+
 //监听菜单发送的请求
 chrome.extension.onMessage.addListener(
 	function (request, sender, sendResponse) {
@@ -151,6 +180,28 @@ chrome.extension.onMessage.addListener(
 			handleSelectorAndSaveTxt(request.rule);
 		} else if (request.action === "save-as-md") {
 			handleSelectorAndSaveMd(request.rule);
+		} else if (request.action === "save-selection-as-text") {
+			saveSelection(request.rule);
+		} else if (request.action === "parse-selection-as-title-selector") {
+			var selector = parseSelectionAsTitle()
+			if (!selector) {
+				alert("您没有选择任何内容");
+			} else {
+				alert("成功，可以通过插件设置查看或修改")
+			}
+			sendResponse({
+				selector: selector
+			});
+		} else if (request.action === "parse-selection-as-content-selector"){
+			var selector = parseSelectionAsContent()
+			if (!selector) {
+				alert("您没有选择任何内容");
+			} else {
+				alert("成功，可以通过插件设置查看或修改")
+			}
+			sendResponse({
+				selector: selector
+			});
 		}
 	}
 );
