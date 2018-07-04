@@ -63,8 +63,23 @@ function wildcardMatching(dest, pattern){
 	//第四步：添加开头结尾
 	regPattern = '^'+regPattern+'$';
 
-	console.log(regPattern)
+	// console.log(regPattern)
 	var reg = new RegExp(regPattern);
-	console.log(reg.test(dest))
+	// console.log(reg.test(dest))
 	return reg.test(dest);
+}
+
+//匹配规则
+function matchRules(rules, url) {
+	for (var i = 0; i < rules.length; i++) {
+		if (wildcardMatching(url, rules[i].urlPattern)) {
+			return rules[i];
+		}
+	}
+	return {
+		"urlPattern": "",
+		"titleSelector": "",
+		"buttonFeature": getButtonFeature(),
+		"contentSelector": ""
+	};
 }

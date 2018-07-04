@@ -130,7 +130,36 @@ window.onload = function () {
 		saveOptions("buttonFeature");
 	}
 	this.document.getElementById("addRule").onclick = addRule;
-	document.body.addEventListener("click", setRule)
+	document.body.addEventListener("click", setRule);
+
+	//高级功能
+	//保存本窗口所有标签作为文本文件
+	this.document.getElementById('saveAllTabInWindowsAsTxt').onclick = function () {
+		chrome.tabs.getAllInWindow(null, function (tabs) {
+			for(var i=0; i<tabs.length; i++){
+				var tab = tabs[i];
+				var rule = matchRules(getRules(), tab.url)
+				chrome.tabs.sendMessage(tab.id, {
+					action: "save-as-text",
+					rule: rule
+				});
+			}
+		});
+	};
+
+	//保存本窗口所有标签作为Markdown文件
+	this.document.getElementById('saveAllTabInWindowsAsMd').onclick = function () {
+		chrome.tabs.getAllInWindow(null, function (tabs) {
+			for (var i = 0; i < tabs.length; i++) {
+				var tab = tabs[i];
+				var rule = matchRules(getRules(), tab.url)
+				chrome.tabs.sendMessage(tab.id, {
+					action: "save-as-md",
+					rule: rule
+				});
+			}
+		});
+	};
 
 }
 

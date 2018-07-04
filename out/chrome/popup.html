@@ -8,7 +8,6 @@
 	<title>Setting</title>
 <style>
 	body {
-		overflow: hidden;
 		margin: 0px;
 		padding: 0px;
 		width: 100%;
@@ -18,7 +17,7 @@
 		margin-bottom: 5px;
 		margin-left: 5px;
 		margin-right: 5px;
- 		word-break: keep-all; 
+ 		word-break: keep-all;
 		white-space: nowrap;
 	}
 	caption { 
@@ -56,7 +55,7 @@
 		<thead>
 		<tr>
 			<th>序号</th>
-			<th>glob模式</th>
+			<th>url</th>
 			<th>标题选择器</th>
 			<th>内容选择器</th>
 			<th>格式</th>
@@ -76,6 +75,13 @@
 	</select>
 	<button id="addRule" data-add="true">添加</button>
 </fieldset>
+
+<fieldset>
+	<legend id="settingLegend">高级</legend>
+	<button id="saveAllTabInWindowsAsTxt">保存当前窗口所有页面为文本文件</button>
+	<button id="saveAllTabInWindowsAsMd">保存当前窗口所有页面为Markdown文件</button>
+</fieldset>
+
 </body>
 
 </html>

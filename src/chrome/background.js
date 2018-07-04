@@ -1,18 +1,3 @@
-//匹配规则
-function matchRules(rules, url) {
-	for(var i=0; i<rules.length; i++){
-		if (wildcardMatching(url, rules[i].urlPattern)) {
-			return rules[i];
-		}
-	}
-	return {
-		"urlPattern": "",
-		"titleSelector": "",
-		"buttonFeature": getButtonFeature(),
-		"contentSelector": ""
-	};
-}
-
 function addOrUpdateRule(url, rule) {
 	var rules = getRules();
 	var oldRule = undefined;
