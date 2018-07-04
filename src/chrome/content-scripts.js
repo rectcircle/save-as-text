@@ -14,7 +14,7 @@ function selectTitle(rule){
 		if (rule.titleSelector == "") {
 			fileName = document.title;
 		} else {
-			var ele = $(rule.titleSelector)[0];
+			var ele = document.querySelector(rule.titleSelector);
 			if (ele != undefined) {
 				fileName = ele.innerText;
 			} else {
@@ -39,8 +39,9 @@ function handleSelectorAndSave(rule, suffix, cb) {
 		if (rule.contentSelector == "") {
 			content = cb(document.body);
 		} else {
-			if ($(rule.contentSelector).length!=0){
-				$(rule.contentSelector).each(function (idx, ele) {
+			var elementList = document.querySelectorAll(rule.contentSelector);
+			if (elementList.length != 0) {
+				elementList.forEach(function (ele) {
 					content += cb(ele);
 				});
 			} else {
@@ -107,8 +108,8 @@ function parseSelectionAsContent() {
 		return undefined;
 	}
 	var ele = userSelection.anchorNode.parentElement;
-	while ($(ele).find(userSelection.focusNode.parentElement).length == 0 &&
-			ele != userSelection.focusNode.parentElement) {
+	var endEle = userSelection.focusNode.parentElement;
+	while (ele.contains(endEle) == 0 && ele != endEle) {
 		ele = ele.parentElement;
 	}
 	var selector = createCSSSelectorByEle(ele)
