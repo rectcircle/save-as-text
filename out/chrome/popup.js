@@ -31,7 +31,7 @@ window.onload = function () {
 		event.toElement.dataset.add ="true";
 		document.getElementById("addRule").innerText = "添加";
 		var rule = {
-			globPattern: getInputAndClear('globPattern'),
+			urlPattern: getInputAndClear('urlPattern'),
 			titleSelector: getInputAndClear('titleSelector'),
 			contentSelector: getInputAndClear('contentSelector'),
 			buttonFeature: getSelectOption('pageButtonFeature')
@@ -54,7 +54,7 @@ window.onload = function () {
 		for(var i=0; i<rules.length; i++){
 			contentHtml += '<tr>';
 			contentHtml += '<td>'+ i +'</td>';
-			contentHtml += '<td><code>' + rules[i].globPattern + '</code></td>';
+			contentHtml += '<td><code>' + rules[i].urlPattern + '</code></td>';
 			contentHtml += '<td><code>' + rules[i].titleSelector + '</code></td>';
 			contentHtml += '<td><code>' + rules[i].contentSelector + '</code></td>';
 			contentHtml += '<td><code>' + buttonFeatureToString(rules[i].buttonFeature) + '</code></td>';
@@ -100,7 +100,7 @@ window.onload = function () {
 			setRules(rules);
 			restoreRule();
 		} else if (ele.name == "update") {
-			document.getElementById("globPattern").value = rules[index].globPattern;
+			document.getElementById("urlPattern").value = rules[index].urlPattern;
 			document.getElementById("titleSelector").value = rules[index].titleSelector;
 			document.getElementById("contentSelector").value = rules[index].contentSelector;
 			setSelectOption("pageButtonFeature", rules[index].buttonFeature);
@@ -108,7 +108,7 @@ window.onload = function () {
 			document.getElementById("addRule").dataset.add="false";
 			document.getElementById("addRule").innerText = "更新";
 		} else if (ele.name == "copy") {
-			document.getElementById("globPattern").value = rules[index].globPattern;
+			document.getElementById("urlPattern").value = rules[index].urlPattern;
 			document.getElementById("titleSelector").value = rules[index].titleSelector;
 			document.getElementById("contentSelector").value = rules[index].contentSelector;
 			setSelectOption("pageButtonFeature", rules[index].buttonFeature);

@@ -13,7 +13,7 @@
 
 	"permissions": ["contextMenus", "tabs"],
 	"background": {
-		"scripts": ["defaultRule.js", "util.js", "minimatch.js", "background.js"]
+		"scripts": ["defaultRule.js", "util.js", "background.js"]
 	},
 
 	"browser_action": {

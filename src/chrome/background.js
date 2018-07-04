@@ -1,12 +1,12 @@
 //匹配规则
 function matchRules(rules, url) {
 	for(var i=0; i<rules.length; i++){
-		if (minimatch(url ,rules[i].globPattern)){
+		if (wildcardMatching(url, rules[i].urlPattern)) {
 			return rules[i];
 		}
 	}
 	return {
-		"globPattern": "",
+		"urlPattern": "",
 		"titleSelector": "",
 		"buttonFeature": getButtonFeature(),
 		"contentSelector": ""
@@ -17,7 +17,7 @@ function addOrUpdateRule(url, rule) {
 	var rules = getRules();
 	var oldRule = undefined;
 	for (var i = 0; i < rules.length; i++) {
-		if (minimatch(url, rules[i].globPattern)) {
+		if (wildcardMatching(url, rules[i].urlPattern)) {
 			oldRule = rules[i];
 			break;
 		}
@@ -25,9 +25,9 @@ function addOrUpdateRule(url, rule) {
 	if(oldRule){
 		Object.assign(oldRule, rule);
 	} else {
-		var urlReg = /https{0,1}:\/\/[^\/]+/i;
+		var urlReg = /https{0,1}:\/\/([^\/]+)/i;
 		var newRule = {
-			"globPattern": url.match(urlReg)[0]+"/**",
+			"urlPattern": "*"+url.match(urlReg)[1]+"*",
 			"titleSelector": "",
 			"buttonFeature": "saveText",
 			"contentSelector": ""

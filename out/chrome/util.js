@@ -51,3 +51,20 @@ function setSelectOption(key, value){
 		}
 	}
 }
+
+function wildcardMatching(dest, pattern){
+	//第一步：替换将与正则表达式冲突的进行转义（不包括`*`和`？`）
+	var regPattern = pattern
+			.replace(/([\.\?\+\$\^\[\]\(\)\{\}\|\\\/])/g, '\\$1')
+	//第二步：将`*`转换为正则表达式
+			.replace(/\*/g, '.*')
+	//第三步：将`?`转化为正则表达式
+			.replace(/\?/g, '.');
+	//第四步：添加开头结尾
+	regPattern = '^'+regPattern+'$';
+
+	console.log(regPattern)
+	var reg = new RegExp(regPattern);
+	console.log(reg.test(dest))
+	return reg.test(dest);
+}
