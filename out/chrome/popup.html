@@ -3,8 +3,12 @@
 
 <head>
 	<script src="defaultRule.js"></script>
+	<script src="turndown.js"></script>
+	<script src="turndown-plugin-gfm.js"></script>
 	<script src="util.js"></script>
+	<script src="save.js"></script>
 	<script src="popup.js"></script>
+
 	<title>Setting</title>
 <style>
 	body {
@@ -32,6 +36,9 @@
  	button { 
 		padding: 1px 4px;
 		margin-right: 1px;
+	}
+	textarea{
+		display: block;
 	}
 </style>
 </head>
@@ -80,7 +87,27 @@
 	<legend id="settingLegend">高级</legend>
 	<button id="saveAllTabInWindowsAsTxt">保存当前窗口所有页面为文本文件</button>
 	<button id="saveAllTabInWindowsAsMd">保存当前窗口所有页面为Markdown文件</button>
+	<hr>
+
+	<input type="text" name="batchUrl" id="batchUrl" placeholder="URL,{p}表示要替换变量">
+	<label id="singleFileLabel">是否保存到单文件</label>
+	<select id="singleFile">
+		<option value="true">是</option>
+		<option value="false" selected="selected">否</option>
+	</select>
+	<label id="paramRuleFunctionLabel">是否使用变量生成函数</label>
+	<select id="paramRuleFunction">
+		<option value="true">是</option>
+		<option value="false" selected="selected">否</option>
+	</select>
+	<textarea id="paramRule" placeholder="变量生成规则
+区间：[start,end,step=1]
+函数：function paramRule(cb){}" rows="4" cols="40"></textarea>
+	<button id="batchSavePageAsTxt">成批下载为文本文件</button>
+	<button id="batchSavePageAsMd">成批下载为Markdown文件</button>
+	<a href="#">功能说明</a>
 </fieldset>
+
 
 </body>
 
