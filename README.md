@@ -7,4 +7,5 @@
 * [图标](http://www.iconfont.cn/)
 * [glob匹配库：minimatch](https://github.com/isaacs/minimatch)
 * [html转markdown工具：turndown](https://github.com/domchristie/turndown)
+* [turndown插件](https://github.com/domchristie/turndown-plugin-gfm)
 
