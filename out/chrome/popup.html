@@ -9,7 +9,7 @@
 	<script src="save.js"></script>
 	<script src="popup.js"></script>
 
-	<title>Setting</title>
+	<title>选项和高级功能</title>
 <style>
 	body {
 		margin: 0px;
@@ -40,6 +40,10 @@
 	textarea{
 		display: block;
 	}
+	#ajaxTimeout{
+		width: 50px;
+	}
+
 </style>
 </head>
 
@@ -62,7 +66,7 @@
 		<thead>
 		<tr>
 			<th>序号</th>
-			<th>url</th>
+			<th>url模式</th>
 			<th>标题选择器</th>
 			<th>内容选择器</th>
 			<th>格式</th>
@@ -72,7 +76,7 @@
 		<tbody id="ruleContent">
 		</tbody>
 	</table>
-	<input type="text" name="urlPattern" id="urlPattern" placeholder="URL的glob模式匹配">
+	<input type="text" name="urlPattern" id="urlPattern" placeholder="URL模式">
 	<input type="text" name="titleSelector" id="titleSelector" placeholder="文件名的CSS选择器">
 	<input type="text" name="contentSelector" id="contentSelector" placeholder="文件内容的CSS选择器">
 	<label id="buttonFeatureLabel">按钮保存格式：</label>
@@ -80,21 +84,23 @@
 		<option id="saveText" value="saveText" selected="selected">txt</option>
 		<option id="saveMarkdown" value="saveMarkdown">md</option>
 	</select>
-	<button id="addRule" data-add="true">添加</button>
+	<button id="addRule" data-add="true">添加</button> 
 </fieldset>
 
 <fieldset>
 	<legend id="settingLegend">高级</legend>
-	<button id="saveAllTabInWindowsAsTxt">保存当前窗口所有页面为文本文件</button>
+	<button id="saveAllTabInWindowsAsTxt">保存当前窗口所有页面为纯文本文件</button>
 	<button id="saveAllTabInWindowsAsMd">保存当前窗口所有页面为Markdown文件</button>
 	<hr>
 
 	<input type="text" name="batchUrl" id="batchUrl" placeholder="URL,{p}表示要替换变量">
 	<label id="singleFileLabel">是否保存到单文件</label>
 	<select id="singleFile">
-		<option value="true">是</option>
-		<option value="false" selected="selected">否</option>
+		<option value="true" selected="selected">是</option>
+		<option value="false">否</option>
 	</select>
+<label for="ajaxTimeout">超时时间：</label>
+<input type="number" name="ajaxTimeout" id="ajaxTimeout" value="0" placeholder="ms">
 	<label id="paramRuleFunctionLabel">是否使用变量生成函数</label>
 	<select id="paramRuleFunction">
 		<option value="true">是</option>
@@ -103,8 +109,15 @@
 	<textarea id="paramRule" placeholder="变量生成规则
 区间：[start,end,step=1]
 函数：function paramRule(cb){}" rows="4" cols="40"></textarea>
-	<button id="batchSavePageAsTxt">成批下载为文本文件</button>
-	<button id="batchSavePageAsMd">成批下载为Markdown文件</button>
+	<div>
+		下载进度：
+		<progress id="downloadProgress" value="0" max="1"></progress>
+		成功：<span id="successCnt">0</span>  
+		失败：<span id="errorCnt">0</span> 
+		总数：<span id="totalCnt">0</span>
+	</div>
+	<button id="batchSavePageAsTxt">批量下载为纯文本文件</button>
+	<button id="batchSavePageAsMd">批量下载为Markdown文件</button>
 	<a href="#">功能说明</a>
 </fieldset>
 

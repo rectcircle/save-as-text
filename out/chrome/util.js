@@ -97,8 +97,9 @@ function Ajax(url){
 		this._params = {};
 		this._method = "GET";
 		this._async = true;
+		this._timeout = 0;
 		this._success =function (content) {};
-		this._error = function (status, content) {};
+		this._error = function (status, statusText, content) {};
 	}
 
 	AjaxObject.prototype.param = function (paramObj) {
@@ -134,6 +135,10 @@ function Ajax(url){
 
 	AjaxObject.prototype.async = function (isAsync) {
 		this._async = isAsync;
+		return this;
+	}
+	AjaxObject.prototype.timeout = function (timeout) {
+		this._timeout = timeout;
 		return this;
 	}
 
@@ -190,6 +195,10 @@ function Ajax(url){
 		
 		//创建XHR
 		var xhr = new XMLHttpRequest();
+		//
+		xhr.ontimeout = function () {
+			self._error(0, "请求超时");
+		}
 		//若是异步创建异步处理函数
 		if (this._async === true) { 
 			var self = this;
@@ -199,17 +208,18 @@ function Ajax(url){
 						var blob = this.response;
 						var contentType = xhr.getResponseHeader('content-type')
 						handleResponseBlob(blob, contentType, self._success);
-					} else {
+					} else if (xhr.status != 0){
 						var blob = this.response;
 						var contentType = xhr.getResponseHeader('content-type')
 						handleResponseBlob(blob, contentType, function name(text) {
-							self._error(xhr.status, text);
+							self._error(xhr.status, xhr.statusText, text);
 						});
 					}
 				}
 			};
 		};
 		xhr.open(this._method, url, this.async);
+		xhr.timeout = this._timeout;
 		xhr.responseType = "blob";
 		if (this._method !== 'GET') { //非GET方式
 			xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -222,11 +232,11 @@ function Ajax(url){
 				var blob = this.response;
 				var contentType = xhr.getResponseHeader('content-type')
 				handleResponseBlob(blob, contentType, self._success);
-			} else {
+			} else if (xhr.status != 0) {
 				var blob = this.response;
 				var contentType = xhr.getResponseHeader('content-type')
 				handleResponseBlob(blob, contentType, function name(text) {
-					self._error(xhr.status, text);
+					self._error(xhr.status, xhr.statusText, text);
 				});
 			}
 		}
@@ -265,8 +275,10 @@ function htmlFilter(html){
 		}
 	}
 	var content = result[1].replace(/(^\s*)|(\s*$)/, "");
+	//过滤掉脚本、样式表、图片
 	content = content.replace(/<script[\s\S]*?<\/script>/g, "");
 	content = content.replace(/<style[\s\S]*?<\/style>/g, "");
+	content = content.replace(/<img[\s\S]*?>/g, "");
 	return {
 		title:title,
 		content:content

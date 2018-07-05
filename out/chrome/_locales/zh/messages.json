@@ -4,11 +4,11 @@
 		"description":"扩展名"
 	},
 	"extDescription": {
-		"message": "将当前页面保存为文本文件",
+		"message": "将页面保存为文本文件",
 		"description": "扩展描述"
 	},
 	"menuTitle":{
-		"message": "保存当前页面为文本文件",
+		"message": "保存当前页面为纯文本文件",
 		"description": "菜单标题"
 	},
 	"showButtonLabel":{

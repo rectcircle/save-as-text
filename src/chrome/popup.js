@@ -225,6 +225,12 @@ window.onload = function () {
 		this.batchUrl = batchUrl;
 		this.singleFile = singleFile;
 		this.fileType = fileType;
+		/**并发数 */
+		this.asyncLimit = 10;
+		/**睡眠延时时间 */
+		this.waitTimeout = 1000;
+		/**Ajax延时 */
+		this.ajaxTimeout = 0;
 		/**下载缓存*/
 		this.contents = []; 
 		/**第一个请求的标题（文件名）*/
@@ -245,43 +251,62 @@ window.onload = function () {
 		this.ondowmloadall = function (len, successCnt, errors, title, contents) {};
 	}
 
-	Downloader.prototype.save = function(p){
+	Downloader.prototype.save = function(p,title){
+		if(title!=undefined){
+			this.title = title;
+		}
 		var self = this;
 		var idx = self.len++;
 		var url = this.batchUrl.replace(/\{p\}/g, p);
 		this.contents[idx] = "";
-		Ajax(url)
-			.success(function (html) {
-				var pageInfos = handleTitleAndContent(url, html, function (ele) {
-					if(self.fileType=='txt'){
-						return ele.innerText;
-					} else if (self.fileType == 'md'){
-						return turndownService.turndown(ele);
-					}
-				});
-				self.contents[idx] = pageInfos.content;
-				if (self.title == "") {
-					self.title = pageInfos.title;
-				}
-				self.cnt++;
-				self.successCnt++;
-				self.ondowmloadone(idx, true, pageInfos.title, self.contents[idx])
-				if(self.isFinished && self.cnt == self.len){
-					self.ondowmloadall(self.len,self.successCnt,self.errors,self.title, self.contents);
-				}
-			})
-			.error(function (status, msg) {
-				self.contents[idx] = "第"+idx+"个页面：下载失败\n"+
-					"Url："+url+"\n"+
-					"http状态码为："+status +" 错误信息为："+msg;
-				self.cnt++;
-				self.errors.push(self.contents[idx]);
-				self.ondowmloadone(idx,false, null, self.contents[idx])
-				if (self.isFinished && self.cnt == self.len) {
-					self.ondowmloadall(self.len,self.successCnt,self.errors,self.title, self.contents);
-				}
-			})
-			.get();
+
+		function exec() {
+			if ((this.len - this.cnt) > this.asyncLimit) {
+				setTimeout(exec, this.timeout + Math.floor(Math.random() * this.timeout/2));
+			} else {
+				Ajax(url)
+					.timeout(self.ajaxTimeout)
+					.success(function (html) {
+						var pageInfos = handleTitleAndContent(url, html, function (ele) {
+							if (self.fileType == 'txt') {
+								return ele.innerText;
+							} else if (self.fileType == 'md') {
+								return turndownService.turndown(ele);
+							}
+						});
+						self.contents[idx] = pageInfos.content;
+						if (self.title == "") {
+							self.title = pageInfos.title;
+						}
+						self.cnt++;
+						self.successCnt++;
+						var nowTitle;
+						if (title != undefined) {
+							nowTitle = title + idx;
+						} else {
+							nowTitle = pageInfos.title;
+						}
+						self.ondowmloadone(idx, true, nowTitle, self.contents[idx])
+						if (self.isFinished && self.cnt == self.len) {
+							self.ondowmloadall(self.len, self.successCnt, self.errors, self.title, self.contents);
+						}
+					})
+					.error(function (status, msg) {
+						self.contents[idx] = "第" + idx + "个页面：下载失败\n" +
+							"Url：" + url + "\n" +
+							"http状态码为：" + status +" 状态信息为："+msg+"\n";
+						self.cnt++;
+						self.errors.push(self.contents[idx]);
+						self.ondowmloadone(idx, false, null, self.contents[idx])
+						if (self.isFinished && self.cnt == self.len) {
+							self.ondowmloadall(self.len, self.successCnt, self.errors, self.title, self.contents);
+						}
+					})
+					.get();
+			}
+		}
+		exec();
+
 	}
 
 	Downloader.prototype.finish = function () {
@@ -293,15 +318,42 @@ window.onload = function () {
 		var singleFile = getSelectOption("singleFile");
 		var paramRuleFunction = getSelectOption("paramRuleFunction");
 		var paramRuleStr = getInput("paramRule");
+		var ajaxTimeout = document.getElementById("ajaxTimeout").valueAsNumber
 		
+
+		//进度信息初始化
+		var progress = document.getElementById("downloadProgress");
+		progress.value = 0;
+		progress.max = 1;
+		var successCntSpan = document.getElementById("successCnt");
+		var errorCntSpan = document.getElementById("errorCnt");
+		var totalCntSpan = document.getElementById("totalCnt");
+		successCntSpan.innerText = errorCntSpan.innerText = totalCntSpan.innerText = 0;
+
+		function updateProgress(isSuccess) {
+			progress.value = progress.value+1;
+			if (isSuccess) {
+				successCntSpan.innerText = parseInt(successCntSpan.innerText) + 1;
+			} else {
+				errorCntSpan.innerText = parseInt(errorCntSpan.innerText) + 1;
+			}
+		}
+		
+		//构造并初始化下载器
 		var downloader = new Downloader(batchUrl, singleFile=="true", fileType);
-		
+		downloader.ajaxTimeout = ajaxTimeout;
 		if (singleFile=="true"){
+			downloader.ondowmloadone = function (index, isSuccess, title, content) {
+				updateProgress(isSuccess);
+			};
 			downloader.ondowmloadall = function (len, successCnt, errors, title, contents) {
-				saveAsText(title+'.'+fileType, contents.join('\n\n'));
+				if (successCnt != 0) {
+					saveAsText(title + '.' + fileType, contents.join('\n\n'));
+				}
 				if (errors.length!=0){
 					saveAsText("失败日志.txt", errors.join('\n\n'));
 				}
+				progress.value = progress.value + 1;
 				alert("下载完成：共需下载"+len+"，成功下载"+successCnt+"，失败下载"+errors.length+"。如有失败请查看`失败日志.txt`");
 			}
 		} else {
@@ -309,51 +361,142 @@ window.onload = function () {
 				if(isSuccess){
 					saveAsText(title + '.' + fileType, content);
 				}
+				updateProgress(isSuccess);
 			};
 			downloader.ondowmloadall = function (len, successCnt, errors, title, contents) {
 				if (errors.length!=0){
 					saveAsText("失败日志.txt", errors.join('\n\n'));
 				}
+				progress.value = progress.value + 1;
 				alert("下载完成：共需下载"+len+"，成功下载"+successCnt+"，失败下载"+errors.length+"。如有失败请查看`失败日志.txt`");
 			};
-
 		}
 
-		//默认使用区间规则的函数
-		function paramRule(save, finish) {
-			var ranges = JSON.parse(paramRuleStr);
-			if (ranges.length==1){
-				ranges.push(ranges[0]);
-				ranges.push(1);
-			}
-			if(ranges.length==2){
-				ranges.push(1);
-			}
-			for(var i=ranges[0]; i<=ranges[1]; i+=ranges[2]){
-				save(i);
-			}
-			finish();
-		}
+		var paramRule = undefined;
 
-		//使用规则匹配函数，将覆盖默认的paramRule
+		//使用用户自定义变量生成函数
 		if (paramRuleFunction=="true"){ 
 			try {
 				eval(paramRuleStr)
+				if (paramRule==undefined){
+					throw "规则函数名必须为paramRule";
+				}
 			} catch (e) {
-				alert("自定义变量生成函数有语法错误：" + e);
+				alert("自定义变量生成函数有错误：" + e);
 				return;
+			}
+		} else { //默认使用区间规则的函数
+			paramRule = function(save) {
+				try {
+					var ranges = JSON.parse(paramRuleStr);
+				} catch (e) {
+					throw "规则必须是合法的json格式"
+				}
+				var title = undefined;
+				var intervals = [];
+
+				function handleNumber(num) {
+					intervals.push([num, num, 1]);
+				}
+
+				function handleArray(arr) {
+					var interval = arr.slice(0);
+					for (var i = 0; i < interval.length; i++){
+						if (typeof (interval[i]) != 'number') {
+							throw "只能是数组元素只能是数字";
+						}
+					}
+					if (interval.length == 1) {
+						interval.push(interval[0]);
+						interval.push(1);
+					} else if (interval.length == 2) {
+						interval.push(1);
+					} else if (interval.length == 3){
+						if (interval[0] < interval[1] && interval[2]<0){
+							throw "当start<end时，则step>0"
+						}
+						if (interval[0] > interval[1] && interval[2] > 0) {
+							throw "当start>end时，则step<0"
+						}
+					} else {
+						throw "区间数组长度最大最小为1，最大为3"
+					}
+					intervals.push(interval);
+				}
+
+				function handleIntervals(ranges) {
+					if (typeof (ranges) == 'number') { //单个数字
+						handleNumber(ranges)
+					} else if (ranges instanceof Array) { //是个数组
+						//检测子元素是否是数组
+						var subArr = false;
+						for (var i = 0; i < ranges.length; i++) {
+							if (ranges[i] instanceof Array) {
+								subArr = true;
+								break;
+							}
+						}
+						if (subArr) { //子元素是数组
+							for (var i = 0; i < ranges.length; i++) {
+								if (typeof (ranges[i]) == 'number') {
+									handleNumber(ranges[i]);
+								} else if (ranges[i] instanceof Array) {
+									handleArray(ranges[i]);
+								} else {
+									throw "数组元素只能是数字或者数组";
+								}
+							}
+						} else {
+							handleArray(ranges);
+						}
+
+					} else {
+						throw "intervals只能是数字或数组";
+					}
+				}
+
+				if (typeof (ranges) == 'number' || ranges instanceof Array) { //单个数字
+					handleIntervals(ranges);
+				} else if ((ranges instanceof Object) && !(ranges instanceof Array)){
+					//是一个对象
+					if (ranges["title"]){
+						title = ranges["title"];
+					}
+					if (ranges["intervals"]){
+						handleIntervals(ranges["intervals"]);
+					} else {
+						throw "必须包含intervals字段"
+					}
+				} else {
+					throw "区间规则类型错误（只能是对象、数组、数字）";
+				}
+
+				for (var i = 0; i < intervals.length; i++){
+					if (intervals[i][2]>0){
+						for (var j = intervals[i][0]; j <= intervals[i][1]; j += intervals[i][2]) {
+							save(j, title);
+						}
+					} else if (intervals[i][2] < 0){
+						for (var j = intervals[i][0]; j >= intervals[i][1]; j += intervals[i][2]) {
+							save(j, title);
+						}
+					} else {
+						throw "step不能等于0";
+					}
+				}
 			}
 		}
 
 		//执行下载
 		try {
-			paramRule(function(p){ 
-					downloader.save(p);
-				}, function(){
-					downloader.finish();
+			paramRule(function(p,title){
+					progress.max = progress.max + 1;
+					totalCntSpan.innerText = progress.max-1;
+					downloader.save(p, title);
 				});
+			downloader.finish();
 		} catch (e) {
-			alert("自定义变量生成函数有语法错误：" + e);
+			alert("规则存在语法错误：" + e);
 			return;
 		}
 		
@@ -361,6 +504,10 @@ window.onload = function () {
 
 	this.document.getElementById('batchSavePageAsTxt').onclick = function () {
 		batchSave("txt");
+	}
+
+	this.document.getElementById('batchSavePageAsMd').onclick = function () {
+		batchSave("md");
 	}
 
 }
