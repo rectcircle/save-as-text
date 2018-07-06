@@ -116,6 +116,18 @@ function parseSelectionAsTitle() {
 	}
 	var ele = userSelection.anchorNode.parentElement;
 	var selector = createCSSSelectorByEle(ele);
+	var targets = document.querySelectorAll(selector);
+	if(targets.length==0){
+		return undefined;
+	} else if (targets.length == 1){
+		return selector;
+	} else {
+		if(targets[0]==ele){
+			return selector;
+		} else {
+			return undefined;
+		}
+	}
 	return selector;
 }
 
@@ -145,9 +157,9 @@ chrome.extension.onMessage.addListener(
 		} else if (request.action === "parse-selection-as-title-selector") {
 			var selector = parseSelectionAsTitle()
 			if (!selector) {
-				alert("您没有选择任何内容");
+				alert("提取规则失败，该元素不能作为标题");
 			} else {
-				alert("成功，可以通过插件设置查看或修改")
+				alert("成功，可以通过扩展设置查看或修改")
 			}
 			sendResponse({
 				selector: selector
@@ -157,7 +169,7 @@ chrome.extension.onMessage.addListener(
 			if (!selector) {
 				alert("您没有选择任何内容");
 			} else {
-				alert("成功，可以通过插件设置查看或修改")
+				alert("成功，可以通过扩展设置查看或修改")
 			}
 			sendResponse({
 				selector: selector
