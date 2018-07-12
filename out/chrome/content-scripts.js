@@ -131,7 +131,7 @@ function parseSelectionAsTitle() {
 	return selector;
 }
 
-function parseSelectionAsContent() {
+function parseSelectionFatherElement() {
 	var userSelection = window.getSelection();
 	if (!userSelection.anchorNode) {
 		return undefined;
@@ -141,8 +141,28 @@ function parseSelectionAsContent() {
 	while (ele.contains(endEle) == 0 && ele != endEle) {
 		ele = ele.parentElement;
 	}
+	return ele;
+}
+
+function parseSelectionAsContent() {
+	var ele = parseSelectionFatherElement();
 	var selector = createCSSSelectorByEle(ele)
 	return selector;
+}
+
+function parseSelectionAsLink() {
+	var userSelection = window.getSelection();
+	var selectionText = userSelection.toString();
+	var ele = parseSelectionFatherElement();
+	var linkList = ele.querySelectorAll('a');
+	var linkArr = [];
+	for(var i=0; i<linkList.length; i++){
+		var a = linkList[i];
+		if (selectionText.indexOf(a.innerText)!=-1){
+			linkArr.push(a.href);
+		}
+	}
+	return linkArr
 }
 
 //监听菜单发送的请求
@@ -174,6 +194,11 @@ chrome.extension.onMessage.addListener(
 			sendResponse({
 				selector: selector
 			});
+		} else if (request.action === "batch-save-selection-link"){
+			var linkArr = parseSelectionAsLink();
+			sendResponse({
+				links: linkArr
+			})
 		}
 	}
 );

@@ -132,8 +132,8 @@ window.onload = function () {
 	this.document.getElementById("addRule").onclick = addRule;
 	document.body.addEventListener("click", setRule);
 
-	//高级功能
-	//保存本窗口所有标签作为文本文件
+	//====高级功能====
+	//高级功能1：保存本窗口所有标签作为文本文件
 	this.document.getElementById('saveAllTabInWindowsAsTxt').onclick = function () {
 		chrome.tabs.getAllInWindow(null, function (tabs) {
 			for(var i=0; i<tabs.length; i++){
@@ -147,7 +147,7 @@ window.onload = function () {
 		});
 	};
 
-	//保存本窗口所有标签作为Markdown文件
+	//高级功能2：保存本窗口所有标签作为Markdown文件
 	this.document.getElementById('saveAllTabInWindowsAsMd').onclick = function () {
 		chrome.tabs.getAllInWindow(null, function (tabs) {
 			for (var i = 0; i < tabs.length; i++) {
@@ -220,6 +220,7 @@ window.onload = function () {
 
 	}
 
+	//高级功能3：保存本窗口所有标签作为Markdown文件
 	//下载器
 	function Downloader(batchUrl, singleFile, fileType) {
 		this.batchUrl = batchUrl;
@@ -509,6 +510,39 @@ window.onload = function () {
 	this.document.getElementById('batchSavePageAsMd').onclick = function () {
 		batchSave("md");
 	}
+
+	//高级功能3：批量下载选中所有链接
+	function downloadSelectionLinks(){
+		var linksJson = localStorage.getItem("selectionLinks");
+		localStorage.removeItem("selectionLinks");
+		if (linksJson == undefined || linksJson == "") {
+			return;
+		}
+
+
+		var paramRuleStr = 'function paramRule(save) {' + '\n' +
+		'	var links = ' + linksJson + ';' + '\n' +
+		'	for(var i=0; i<links.length; i++){' + '\n' +
+		'		save(links[i]);' + '\n' +
+		'	}' + '\n' +
+		'}';
+
+		//设置URL
+		document.getElementById("batchUrl").value = "{p}";
+
+		//设置使用规则函数
+		document.getElementById("paramRuleFunction").value = "true";
+
+		//设置规则函数
+		document.getElementById("paramRule").value = paramRuleStr;
+
+		if (confirm("是否确认下载：\n格式-txt，保存为-单文件\n若要自定义配置，点击取消")){
+			setTimeout(function () {
+				batchSave('txt');
+			}, 500);
+		}
+	}
+	downloadSelectionLinks();
 
 }
 

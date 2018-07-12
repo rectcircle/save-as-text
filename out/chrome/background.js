@@ -66,6 +66,28 @@ chrome.contextMenus.create({
 });
 
 chrome.contextMenus.create({
+	"title": "批量下载选中的所有链接",
+	"contexts": ["selection"],
+	"onclick": function () {
+		chrome.tabs.getSelected(null, function (tab) {　 // 先获取当前页面的tabID
+			var rule = matchRules(getRules(), tab.url)
+			chrome.tabs.sendMessage(tab.id, {
+				action: "batch-save-selection-link",
+				rule: rule
+			},function (response) {
+				console.log(response);
+				//将内容缓存到localStorage
+				localStorage.setItem("selectionLinks", JSON.stringify(response.links));
+				//打开选项页面，进行下载
+				chrome.tabs.create({
+					url: chrome.extension.getURL("popup.html")
+				});
+			});
+		});
+	}
+});
+
+chrome.contextMenus.create({
 	"title": "提取选中内容规则，添加到页面规则中的“标题选择器”",
 	"contexts": ["selection"],
 	"onclick": function () {
