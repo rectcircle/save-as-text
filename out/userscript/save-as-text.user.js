@@ -3,6 +3,7 @@
 // @name:zh      Userscript+ : 保存为纯文本文件
 // @supportURL   https://github.com/rectcircle/save-as-text
 // @downloadURL  https://greasyfork.org/scripts/370270-userscript-save-as-text/code/Userscript+%20:%20Save%20As%20Text.user.js
+// @namespace    https://github.com/rectcircle/save-as-text
 // @license      MIT
 // @version      1.0.0
 // @description         Save the Page as Plain text file
