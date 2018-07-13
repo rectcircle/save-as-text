@@ -5,7 +5,7 @@
 
 目前已经支持的浏览器为：
 * [Chrome扩展](https://github.com/rectcircle/save-as-text/releases/tag/v1.0.0)
-* [暴力猴用户脚本](#)
+* [暴力猴用户脚本](https://greasyfork.org/zh-CN/scripts/370270-userscript-save-as-text)
 
 ## 引用
 
