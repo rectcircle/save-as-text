@@ -140,6 +140,28 @@ function parseSelectionAsLink() {
 	return linkArr
 }
 
+function copyToClipboard(str) {
+	var fbak = document.oncopy;
+	document.oncopy = function (event) {
+		event.clipboardData.setData("text/plain", str);
+		event.preventDefault();
+		document.oncopy = fbak;
+	};
+	document.execCommand("copy", false, null);
+}
+
+function addSelectionToClipboard(suffix) {
+	var content;
+	if (suffix=="txt"){
+		content = window.getSelection().toString();
+	} else if(suffix=='md') {
+		var ele = parseSelectionFatherElement();
+		content = turndownService.turndown(ele);
+	}
+	copyToClipboard(content);
+	alert("复制到剪切板成功");
+}
+
 //监听菜单发送的请求
 chrome.extension.onMessage.addListener(
 	function (request, sender, sendResponse) {
@@ -174,6 +196,10 @@ chrome.extension.onMessage.addListener(
 			sendResponse({
 				links: linkArr
 			})
+		} else if (request.action === "add-selection-to-clipboard-txt"){
+			addSelectionToClipboard("txt");
+		} else if (request.action === "add-selection-to-clipboard-md") {
+			addSelectionToClipboard("md");
 		}
 	}
 );

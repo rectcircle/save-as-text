@@ -65,6 +65,41 @@ chrome.contextMenus.create({
 	}
 });
 
+var parentId = chrome.contextMenus.create({
+	"title": "将选中内容添加到剪切板",
+	"contexts": ["selection"]
+});
+
+chrome.contextMenus.create({
+	"title": "纯文本格式",
+	"contexts": ["selection"],
+	"parentId": parentId,
+	"onclick": function () {
+		chrome.tabs.getSelected(null, function (tab) {　 // 先获取当前页面的tabID
+			var rule = matchRules(getRules(), tab.url)
+			chrome.tabs.sendMessage(tab.id, {
+				action: "add-selection-to-clipboard-txt",
+				rule: rule
+			});
+		});
+	}
+});
+
+chrome.contextMenus.create({
+	"title": "Markdown格式",
+	"contexts": ["selection"],
+	"parentId": parentId,
+	"onclick": function () {
+		chrome.tabs.getSelected(null, function (tab) {　 // 先获取当前页面的tabID
+			var rule = matchRules(getRules(), tab.url)
+			chrome.tabs.sendMessage(tab.id, {
+				action: "add-selection-to-clipboard-md",
+				rule: rule
+			});
+		});
+	}
+});
+
 chrome.contextMenus.create({
 	"title": "批量下载选中的所有链接",
 	"contexts": ["selection"],
