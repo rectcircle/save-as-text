@@ -1,6 +1,6 @@
 // ==UserScript==
-// @name         Userscript+ : Save As Text
-// @name:zh      Userscript+ : 保存为纯文本文件
+// @name         Save As Text
+// @name:zh      保存为纯文本文件
 // @supportURL   https://github.com/rectcircle/save-as-text
 // @downloadURL  https://greasyfork.org/scripts/370270-userscript-save-as-text/code/Userscript+%20:%20Save%20As%20Text.user.js
 // @namespace    https://github.com/rectcircle/save-as-text
