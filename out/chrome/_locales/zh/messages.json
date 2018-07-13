@@ -1,30 +1,228 @@
 {
-	"extName":{
-		"message":"保存为文本文件",
-		"description":"扩展名"
+	"extName": {
+		"message": "保存为文本文件",
+		"description": "扩展名"
 	},
 	"extDescription": {
-		"message": "将页面保存为文本文件",
+		"message": "将页面保存为文本文件，支持：批量保存，保存为Markdown格式",
 		"description": "扩展描述"
 	},
-	"menuTitle":{
+
+
+	"savePageAsTextMenu": {
 		"message": "保存当前页面为纯文本文件",
-		"description": "菜单标题"
+		"description": "页面菜单标题1"
 	},
-	"showButtonLabel":{
-		"message": "是否显示悬浮按钮：",
-		"description": "设置页面显示按钮提示语"
+	"savePageAsMdMenu": {
+		"message": "保存当前页面为Markdown格式文件",
+		"description": "页面菜单标题2"
 	},
-	"setting":{
+	"saveSelectionAsTextMenu": {
+		"message": "保存选中内容为无格式文本文件",
+		"description": "选中菜单标题1"
+	},
+	"addSelectionToClipboardMenu": {
+		"message": "将选中内容添加到剪切板",
+		"description": "选中菜单标题2"
+	},
+	"plainTextFormat": {
+		"message": "纯文本格式",
+		"description": "将选中内容添加到剪切板子项目"
+	},
+	"markdownFormat":{
+		"message": "Markdown格式",
+		"description": "将选中内容添加到剪切板子项目"
+	},
+	"batchDownloadMenu": {
+		"message": "批量下载选中的所有链接",
+		"description": "选中菜单标题3"
+	},
+	"extractTitle": {
+		"message": "提取选中内容规则，添加到页面规则中的“标题选择器”",
+		"description": "选中菜单标题4"
+	},
+	"extractContent": {
+		"message": "提取选中内容规则，添加到页面规则中的“内容选择器”",
+		"description": "选中菜单标题5"
+	},
+
+
+	"copyToClipboardAlert":{
+		"message": "复制到剪切板成功",
+		"description": "复制到剪切板成功Alert"
+	},
+	"extractTitleRuleFailureAlert": {
+		"message": "提取规则失败，该元素不能作为标题",
+		"description": "提取标题规则失败Alert"
+	},
+	"extractRuleSuccessAlert": {
+		"message": "成功，可以通过扩展设置查看或修改",
+		"description": "提取规则成功Alert"
+	},
+	"noSelectionAlert": {
+		"message": "您没有选择任何内容",
+		"description": "您没有选择任何内容Alert"
+	},
+
+
+	"optionTitle": {
+		"message": "选项和高级功能",
+		"description": "选项页标题"
+	},
+	"setting": {
 		"message": "设置",
 		"description": "设置"
 	},
-	"yes":{
+	"showButtonLabel": {
+		"message": "是否显示悬浮按钮：",
+		"description": "设置页面显示按钮提示语"
+	},
+	"buttonFeatureLabel": {
+		"message": "选择按钮功能：",
+		"description": "选择按钮功能提示语"
+	},
+	"saveText": {
+		"message": "保存为纯文本文件",
+		"description": "保存为纯文本文件"
+	},
+	"saveMarkdown": {
+		"message": "保存为Markdown文件",
+		"description": "保存为Markdown文件"
+	},
+	"saveRule": {
+		"message": "保存规则：",
+		"description": "保存规则"
+	},
+	"saveRuleId": {
+		"message": "序号",
+		"description": "序号"
+	},
+	"saveRuleUrl": {
+		"message": "URL模式",
+		"description": "URL模式"
+	},
+	"saveRuleTitle": {
+		"message": "标题选择器",
+		"description": "标题选择器"
+	},
+	"saveRuleContent": {
+		"message": "内容选择器",
+		"description": "内容选择器"
+	},
+	"saveRuleType": {
+		"message": "格式",
+		"description": "格式"
+	},
+	"saveRuleOperation": {
+		"message": "操作",
+		"description": "操作"
+	},
+	"urlPattern": {
+		"message": "URL模式",
+		"description": "URL模式"
+	},
+	"titleSelector": {
+		"message": "文件名的CSS选择器",
+		"description": "文件名的CSS选择器"
+	},
+	"contentSelector": {
+		"message": "文件内容的CSS选择器",
+		"description": "文件内容的CSS选择器"
+	},
+	"pageButtonFeatureLabel": {
+		"message": "按钮保存格式：",
+		"description": "按钮保存格式"
+	},
+	"addRule": {
+		"message": "添加",
+		"description": "添加"
+	},
+	"advanceLegend": {
+		"message": "高级功能",
+		"description": "高级功能"
+	},
+	"saveAllTabInWindowsAsTxt": {
+		"message": "保存当前窗口所有页面为纯文本文件",
+		"description": "保存当前窗口所有页面为纯文本文件"
+	},
+	"saveAllTabInWindowsAsMd": {
+		"message": "保存当前窗口所有页面为Markdown文件",
+		"description": "保存当前窗口所有页面为Markdown文件"
+	},
+	"batchUrl": {
+		"message": "URL,{p}表示要替换变量",
+		"description": "URL,{p}表示要替换变量"
+	},
+	"singleFileLabel": {
+		"message": "是否保存到单文件",
+		"description": "是否保存到单文件"
+	},
+	"timeoutLabel": {
+		"message": "超时时间：",
+		"description": "超时时间"
+	},
+	"paramRuleFunctionLabel": {
+		"message": "是否使用变量生成函数：",
+		"description": "是否使用变量生成函数"
+	},
+	"paramRule": {
+		"message": "变量生成规则\n区间：[start,end,step=1]\n函数：function paramRule(save){}",
+		"description": "变量规则"
+	},
+	"downloadProgressLabel": {
+		"message": "下载进度：",
+		"description": "下载进度"
+	},
+	"successCntLabel": {
+		"message": "成功：",
+		"description": "成功"
+	},
+	"errorCntLabel": {
+		"message": "失败：",
+		"description": "失败"
+	},
+	"totalCntLabel": {
+		"message": "总数：",
+		"description": "总数"
+	},
+	"batchSavePageAsTxt": {
+		"message": "批量下载为纯文本文件",
+		"description": "批量下载为纯文本文件"
+	},
+	"batchSavePageAsMd": {
+		"message": "批量下载为Markdown文件",
+		"description": "批量下载为Markdown文件"
+	},
+	"help": {
+		"message": "使用帮助",
+		"description": "使用帮助"
+	},
+	"yes": {
 		"message": "是",
 		"description": "是"
 	},
-	"no":{
+	"no": {
 		"message": "否",
 		"description": "否"
+	},
+	"up": {
+		"message": "上移",
+		"description": "上移"
+	},
+	"down": {
+		"message": "下移",
+		"description": "上移"
+	},
+	"delete": {
+		"message": "删除",
+		"description": "删除"
+	},
+	"update": {
+		"message": "更新",
+		"description": "更新"
+	},
+	"copy": {
+		"message": "拷贝",
+		"description": "拷贝"
 	}
 }

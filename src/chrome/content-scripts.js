@@ -76,7 +76,7 @@ function createCSSSelectorByEle(ele){
 		selector += '#' + ele.id;
 	}
 	if (ele.className != "") {
-		var classNames = ele.className.split(/\s+/);
+		var classNames = ele.classList;
 		classNames.forEach(function (value) {
 			selector += '.' +value;
 		})
@@ -86,21 +86,43 @@ function createCSSSelectorByEle(ele){
 
 function parseSelectionAsTitle() {
 	var userSelection = window.getSelection();
+	var selectionText = userSelection.toString();
+
 	if (!userSelection.anchorNode) {
 		return undefined;
 	}
-	var ele = userSelection.anchorNode.parentElement;
-	var selector = createCSSSelectorByEle(ele);
-	var targets = document.querySelectorAll(selector);
-	if(targets.length==0){
-		return undefined;
-	} else if (targets.length == 1){
-		return selector;
-	} else {
-		if(targets[0]==ele){
+	var ele = userSelection.anchorNode;
+	var selector;
+	while(true){
+		ele = ele.parentElement;
+		selector = createCSSSelectorByEle(ele);
+		var targets = document.querySelectorAll(selector);
+		if (targets.length == 0) {
+			return undefined;
+		} else if (targets.length == 1) {
 			return selector;
 		} else {
+			if (targets[0] == ele) {
+				return selector;
+			} else {
+				if (ele.innerText.indexOf(selectionText)!=-1){
+					break;
+				}
+			}
+		}
+	}
+	while(true){
+		ele = ele.parentElement;
+		if(ele == document.body){
 			return undefined;
+		}
+		selector = createCSSSelectorByEle(ele)+'>'+selector;
+
+		var targets = document.querySelectorAll(selector);
+		if (targets.length == 0) {
+			return undefined;
+		} else if (targets.length == 1) {
+			return selector;
 		}
 	}
 	return selector;
@@ -159,7 +181,7 @@ function addSelectionToClipboard(suffix) {
 		content = turndownService.turndown(ele);
 	}
 	copyToClipboard(content);
-	alert("复制到剪切板成功");
+	alert(chrome.i18n.getMessage("copyToClipboardAlert"));
 }
 
 //监听菜单发送的请求
@@ -174,9 +196,9 @@ chrome.extension.onMessage.addListener(
 		} else if (request.action === "parse-selection-as-title-selector") {
 			var selector = parseSelectionAsTitle()
 			if (!selector) {
-				alert("提取规则失败，该元素不能作为标题");
+				alert(chrome.i18n.getMessage('extractTitleRuleFailureAlert'));
 			} else {
-				alert("成功，可以通过扩展设置查看或修改")
+				alert(chrome.i18n.getMessage('extractRuleSuccessAlert'))
 			}
 			sendResponse({
 				selector: selector
@@ -184,9 +206,9 @@ chrome.extension.onMessage.addListener(
 		} else if (request.action === "parse-selection-as-content-selector"){
 			var selector = parseSelectionAsContent()
 			if (!selector) {
-				alert("您没有选择任何内容");
+				alert(chrome.i18n.getMessage('noSelectionAlert'));
 			} else {
-				alert("成功，可以通过扩展设置查看或修改")
+				alert(chrome.i18n.getMessage('extractRuleSuccessAlert'))
 			}
 			sendResponse({
 				selector: selector

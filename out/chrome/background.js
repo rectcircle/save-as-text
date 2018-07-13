@@ -25,7 +25,7 @@ function addOrUpdateRule(url, rule) {
 
 //页面菜单
 chrome.contextMenus.create({
-	"title": chrome.i18n.getMessage("menuTitle"),
+	"title": chrome.i18n.getMessage("savePageAsTextMenu"),
 	"onclick": function () {
 		chrome.tabs.getSelected(null, function (tab) {　 // 先获取当前页面的tabID
 			var rule = matchRules(getRules(), tab.url)
@@ -38,7 +38,7 @@ chrome.contextMenus.create({
 });
 
 chrome.contextMenus.create({
-	"title": "保存当前页面为Markdown格式的文件",
+	"title": chrome.i18n.getMessage("savePageAsMdMenu"),
 	"onclick": function () {
 		chrome.tabs.getSelected(null, function (tab) {　 // 先获取当前页面的tabID
 			var rule = matchRules(getRules(), tab.url)
@@ -51,27 +51,13 @@ chrome.contextMenus.create({
 });
 
 //选中菜单
-chrome.contextMenus.create({
-	"title": "保存选中内容为无格式的文本文件",
-	"contexts": ["selection"],
-	"onclick": function () {
-		chrome.tabs.getSelected(null, function (tab) {　 // 先获取当前页面的tabID
-			var rule = matchRules(getRules(), tab.url)
-			chrome.tabs.sendMessage(tab.id, {
-				action: "save-selection-as-text",
-				rule: rule
-			});
-		});
-	}
-});
-
 var parentId = chrome.contextMenus.create({
-	"title": "将选中内容添加到剪切板",
+	"title": chrome.i18n.getMessage("addSelectionToClipboardMenu"),
 	"contexts": ["selection"]
 });
 
 chrome.contextMenus.create({
-	"title": "纯文本格式",
+	"title": chrome.i18n.getMessage("plainTextFormat"),
 	"contexts": ["selection"],
 	"parentId": parentId,
 	"onclick": function () {
@@ -86,7 +72,7 @@ chrome.contextMenus.create({
 });
 
 chrome.contextMenus.create({
-	"title": "Markdown格式",
+	"title": chrome.i18n.getMessage("markdownFormat"),
 	"contexts": ["selection"],
 	"parentId": parentId,
 	"onclick": function () {
@@ -101,7 +87,22 @@ chrome.contextMenus.create({
 });
 
 chrome.contextMenus.create({
-	"title": "批量下载选中的所有链接",
+	"title": chrome.i18n.getMessage('saveSelectionAsTextMenu'),
+	"contexts": ["selection"],
+	"onclick": function () {
+		chrome.tabs.getSelected(null, function (tab) {　 // 先获取当前页面的tabID
+			var rule = matchRules(getRules(), tab.url)
+			chrome.tabs.sendMessage(tab.id, {
+				action: "save-selection-as-text",
+				rule: rule
+			});
+		});
+	}
+});
+
+
+chrome.contextMenus.create({
+	"title": chrome.i18n.getMessage('batchDownloadMenu'),
 	"contexts": ["selection"],
 	"onclick": function () {
 		chrome.tabs.getSelected(null, function (tab) {　 // 先获取当前页面的tabID
@@ -123,7 +124,7 @@ chrome.contextMenus.create({
 });
 
 chrome.contextMenus.create({
-	"title": "提取选中内容规则，添加到页面规则中的“标题选择器”",
+	"title": chrome.i18n.getMessage('extractTitle'),
 	"contexts": ["selection"],
 	"onclick": function () {
 		chrome.tabs.getSelected(null, function (tab) {　 // 先获取当前页面的tabID
@@ -143,7 +144,7 @@ chrome.contextMenus.create({
 });
 
 chrome.contextMenus.create({
-	"title": "提取选中内容规则，添加到页面规则中的“内容选择器”",
+	"title": chrome.i18n.getMessage('extractContent'),
 	"contexts": ["selection"],
 	"onclick": function () {
 		chrome.tabs.getSelected(null, function (tab) {　 // 先获取当前页面的tabID

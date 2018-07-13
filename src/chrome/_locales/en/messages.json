@@ -4,27 +4,225 @@
 		"description": "Extension name"
 	},
 	"extDescription": {
-		"message": "Save the Page as Plain text file",
+		"message": "Save the Page as text file,Support:batch save, save as Markdown",
 		"description": "Extension description"
 	},
-	"menuTitle": {
+
+
+	"savePageAsTextMenu": {
 		"message": "Save the Page as Plain text file",
-		"description": "Context Menus Title"
+		"description": "page Menus Title"
 	},
-	"showButtonLabel": {
-		"message": "Display button:",
-		"description": "Display button on page"
+	"savePageAsMdMenu": {
+		"message": "Save the Page as Markdown file",
+		"description": "page Menus Title"
+	},
+	"saveSelectionAsTextMenu": {
+		"message": "Save the selection as a plain text file",
+		"description": "selection Menus Title"
+	},
+	"addSelectionToClipboardMenu": {
+		"message": "Add the selection to the clipboard",
+		"description": "selection Menus Title"
+	},
+	"plainTextFormat": {
+		"message": "Plain Text Format",
+		"description": "Add the selection to the clipboard subproject"
+	},
+	"markdownFormat": {
+		"message": "Markdown Format",
+		"description": "Add the selection to the clipboard subproject"
+	},
+	"batchDownloadMenu": {
+		"message": "Batch download all selected links",
+		"description": "selection Menus Title"
+	},
+	"extractTitle": {
+		"message": "Extract selection rule, add it to the \"title selector\"",
+		"description": "selection Menus Title"
+	},
+	"extractContent": {
+		"message": "Extract selection rule, add it to the \"content selector\"",
+		"description": "selection Menus Title"
+	},
+
+
+	"copyToClipboardAlert": {
+		"message": "Copy to clipboard successfully",
+		"description": "Copy to clipboard successfully Alert"
+	},
+	"extractTitleRuleFailureAlert": {
+		"message": "Extract rule failed, the element cannot be used as the title",
+		"description": "Extraction title rule succeeded Alert"
+	},
+	"extractRuleSuccessAlert": {
+		"message": "Successful, can be viewed or modified through extension settings",
+		"description": "Extraction rule succeeded Alert"
+	},
+	"noSelectionAlert": {
+		"message": "You have not selected anything content",
+		"description": "You have not selected anything content Alert"
+	},
+
+
+	"optionTitle": {
+		"message": "Option & Advance Feature",
+		"description": "Option & Advance Feature"
 	},
 	"setting": {
 		"message": "Setting",
 		"description": "Setting"
 	},
+	"showButtonLabel": {
+		"message": "Display button:",
+		"description": "Display button on page"
+	},
+	"buttonFeatureLabel": {
+		"message": "Select button function：",
+		"description": "Select Button Function"
+	},
+	"saveText": {
+		"message": "Save as plain text",
+		"description": "Save as plain text"
+	},
+	"saveMarkdown": {
+		"message": "Save as Markdown file",
+		"description": "Save as Markdown file"
+	},
+	"saveRule": {
+		"message": "Save rule:",
+		"description": "Save rule"
+	},
+	"saveRuleId": {
+		"message": "No.",
+		"description": "Number"
+	},
+	"saveRuleUrl": {
+		"message": "URL pattern",
+		"description": "URL pattern"
+	},
+	"saveRuleTitle": {
+		"message": "Title selector",
+		"description": "Title selector"
+	},
+	"saveRuleContent": {
+		"message": "Content selector",
+		"description": "Content selector"
+	},
+	"saveRuleType": {
+		"message": "format",
+		"description": "format"
+	},
+	"saveRuleOperation": {
+		"message": "Operation",
+		"description": "Operation"
+	},
+	"urlPattern": {
+		"message": "URL pattern",
+		"description": "URL pattern"
+	},
+	"titleSelector": {
+		"message": "File name CSS selector",
+		"description": "file name CSS selector"
+	},
+	"contentSelector": {
+		"message": "File content CSS selector",
+		"description": "file content CSS selector"
+	},
+	"pageButtonFeatureLabel": {
+		"message": "Save format",
+		"description": "Button save format"
+	},
+	"addRule": {
+		"message": "add",
+		"description": "add"
+	},
+	"advanceLegend": {
+		"message": "Advance Feature",
+		"description": "Advance Feature"
+	},
+	"saveAllTabInWindowsAsTxt": {
+		"message": "Save all pages as plain text file",
+		"description": "Save all pages of the current window as plain text files"
+	},
+	"saveAllTabInWindowsAsMd": {
+		"message": "Save all pages as markdown files",
+		"description": "Save all pages of the current window as markdown files"
+	},
+	"batchUrl": {
+		"message": "URL,{p} as param",
+		"description": "URL,{p} as replacement param"
+	},
+	"singleFileLabel": {
+		"message": "Save to a single file",
+		"description": "Whether to save to a single file"
+	},
+	"timeoutLabel": {
+		"message": "Timeout:",
+		"description": "timeout"
+	},
+	"paramRuleFunctionLabel": {
+		"message": "Use param function",
+		"description": "Whether to use the variable generation function"
+	},
+	"paramRule": {
+		"message": "Variable generation rule\nRange：[start,end,step=1]\nFunction：function paramRule(save){}",
+		"description": "Variable generation rule"
+	},
+	"downloadProgressLabel": {
+		"message": "Download progress:",
+		"description": "Download progress"
+	},
+	"successCntLabel": {
+		"message": "Success:",
+		"description": "Success"
+	},
+	"errorCntLabel": {
+		"message": "Failure:",
+		"description": "failure"
+	},
+	"totalCntLabel": {
+		"message": "Total:",
+		"description": "Total"
+	},
+	"batchSavePageAsTxt": {
+		"message": "Batch download as plain text file",
+		"description": "Batch download as plain text file"
+	},
+	"batchSavePageAsMd": {
+		"message": "Batch download as markdown file",
+		"description": "Batch download as markdown file"
+	},
+	"help": {
+		"message": "help",
+		"description": "help"
+	},
 	"yes": {
 		"message": "Yes",
-		"description": "Yes"
+		"description": "yes"
 	},
 	"no": {
 		"message": "No",
 		"description": "No"
+	},
+	"up": {
+		"message": "up",
+		"description": "up"
+	},
+	"down": {
+		"message": "down",
+		"description": "down"
+	},
+	"delete": {
+		"message": "delete",
+		"description": "delete"
+	},
+	"update": {
+		"message": "update",
+		"description": "update"
+	},
+	"copy": {
+		"message": "copy",
+		"description": "copy"
 	}
 }

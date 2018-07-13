@@ -52,8 +52,8 @@
 	<legend id="settingLegend">设置</legend>
 	<label id="showButtonLabel">是否显示悬浮按钮：</label>
 	<select id="showButton">
-		<option id="yesOption" value="true">是</option>
-		<option id="noOption" value="false" selected="selected">否</option>
+		<option class="yesOption" value="true">是</option>
+		<option class="noOption" value="false" selected="selected">否</option>
 	</select>
 	<label id="buttonFeatureLabel">选择按钮功能：</label>
 	<select id="buttonFeature">
@@ -62,15 +62,15 @@
 	</select>
 	<hr>
 	<table>
-		<caption>保存规则：</caption>
+		<caption id="saveRule">保存规则：</caption>
 		<thead>
 		<tr>
-			<th>序号</th>
-			<th>url模式</th>
-			<th>标题选择器</th>
-			<th>内容选择器</th>
-			<th>格式</th>
-			<th>操作</th>
+			<th id="saveRuleId">序号</th>
+			<th id="saveRuleUrl">URL模式</th>
+			<th id="saveRuleTitle">标题选择器</th>
+			<th id="saveRuleContent">内容选择器</th>
+			<th id="saveRuleType">格式</th>
+			<th id="saveRuleOperation">操作</th>
 		</tr>
 		</thead>
 		<tbody id="ruleContent">
@@ -79,7 +79,7 @@
 	<input type="text" name="urlPattern" id="urlPattern" placeholder="URL模式">
 	<input type="text" name="titleSelector" id="titleSelector" placeholder="文件名的CSS选择器">
 	<input type="text" name="contentSelector" id="contentSelector" placeholder="文件内容的CSS选择器">
-	<label id="buttonFeatureLabel">按钮保存格式：</label>
+	<label id="pageButtonFeatureLabel">按钮保存格式：</label>
 	<select id="pageButtonFeature">
 		<option id="saveText" value="saveText" selected="selected">txt</option>
 		<option id="saveMarkdown" value="saveMarkdown">md</option>
@@ -88,7 +88,7 @@
 </fieldset>
 
 <fieldset>
-	<legend id="settingLegend">高级</legend>
+	<legend id="advanceLegend">高级功能</legend>
 	<button id="saveAllTabInWindowsAsTxt">保存当前窗口所有页面为纯文本文件</button>
 	<button id="saveAllTabInWindowsAsMd">保存当前窗口所有页面为Markdown文件</button>
 	<hr>
@@ -96,29 +96,29 @@
 	<input type="text" name="batchUrl" id="batchUrl" placeholder="URL,{p}表示要替换变量">
 	<label id="singleFileLabel">是否保存到单文件</label>
 	<select id="singleFile">
-		<option value="true" selected="selected">是</option>
-		<option value="false">否</option>
+		<option class="yesOption" value="true" selected="selected">是</option>
+		<option class="noOption" value="false">否</option>
 	</select>
-<label for="ajaxTimeout">超时时间：</label>
-<input type="number" name="ajaxTimeout" id="ajaxTimeout" value="0" placeholder="ms">
+	<label for="ajaxTimeout" id="timeoutLabel">超时时间：</label>
+	<input type="number" name="ajaxTimeout" id="ajaxTimeout" value="0" placeholder="ms">
 	<label id="paramRuleFunctionLabel">是否使用变量生成函数</label>
 	<select id="paramRuleFunction">
-		<option value="true">是</option>
-		<option value="false" selected="selected">否</option>
+		<option class="yesOption" value="true">是</option>
+		<option class="noOption" value="false" selected="selected">否</option>
 	</select>
 	<textarea id="paramRule" placeholder="变量生成规则
 区间：[start,end,step=1]
 函数：function paramRule(save){}" rows="4" cols="40"></textarea>
 	<div>
-		下载进度：
+		<span id="downloadProgressLabel">下载进度：</span>
 		<progress id="downloadProgress" value="0" max="1"></progress>
-		成功：<span id="successCnt">0</span>  
-		失败：<span id="errorCnt">0</span> 
-		总数：<span id="totalCnt">0</span>
+		<span id="successCntLabel">成功：</span><span id="successCnt">0</span>  
+		<span id="errorCntLabel">失败：</span><span id="errorCnt">0</span> 
+		<span id="totalCntLabel">总数：</span><span id="totalCnt">0</span>
 	</div>
 	<button id="batchSavePageAsTxt">批量下载为纯文本文件</button>
 	<button id="batchSavePageAsMd">批量下载为Markdown文件</button>
-	<a href="#">功能说明</a>
+	<a id="help" target="_blank" href="https://github.com/rectcircle/save-as-text/blob/master/guide.md#save-as-text-%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97">使用帮助</a>
 </fieldset>
 
 

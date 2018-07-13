@@ -1,14 +1,62 @@
 window.onload = function () {
 
-	//页面国际化
-	document.getElementById("showButtonLabel").innerText =
-		chrome.i18n.getMessage('showButtonLabel');
-	document.getElementById("settingLegend").innerText =
-		chrome.i18n.getMessage('setting');
-	document.getElementById("yesOption").innerText =
-		chrome.i18n.getMessage('yes');
-	document.getElementById("noOption").innerText =
-		chrome.i18n.getMessage('no');
+	function setInnerText(id){
+		document.getElementById(id).innerText =
+			chrome.i18n.getMessage(id);
+	}
+
+	function pageI18n(){
+		//页面国际化
+		//页面标题
+		document.title = chrome.i18n.getMessage('optionTitle');
+		document.getElementById("settingLegend").innerText =
+			chrome.i18n.getMessage('setting');
+		document.getElementById("showButtonLabel").innerText =
+			chrome.i18n.getMessage('showButtonLabel');
+		//所有页面中的yes
+		var eles = document.querySelectorAll('.yesOption');
+		for (var i = 0; i < eles.length; i++) {
+			eles[i].innerText = chrome.i18n.getMessage('yes');
+		}
+		//所有页面中的no
+		var eles = document.querySelectorAll('.noOption');
+		for (var i = 0; i < eles.length; i++) {
+			eles[i].innerText = chrome.i18n.getMessage('no');
+		}
+		setInnerText('buttonFeatureLabel');
+		setInnerText('saveText');
+		setInnerText('saveMarkdown');
+		setInnerText('saveRule');
+		setInnerText('saveRuleId');
+		setInnerText('saveRuleUrl');
+		setInnerText('saveRuleTitle');
+		setInnerText('saveRuleContent');
+		setInnerText('saveRuleType');
+		setInnerText('saveRuleOperation');
+		document.getElementById('urlPattern').placeholder = chrome.i18n.getMessage('urlPattern');
+		document.getElementById('titleSelector').placeholder = chrome.i18n.getMessage('titleSelector');
+		document.getElementById('contentSelector').placeholder = chrome.i18n.getMessage('contentSelector');
+		document.getElementById('urlPattern').placeholder = chrome.i18n.getMessage('urlPattern');
+		setInnerText('pageButtonFeatureLabel');
+		setInnerText('addRule');
+		setInnerText('advanceLegend');
+		setInnerText('saveAllTabInWindowsAsTxt');
+		setInnerText('saveAllTabInWindowsAsMd');
+		document.getElementById('batchUrl').placeholder = chrome.i18n.getMessage('batchUrl');
+		setInnerText('singleFileLabel');
+		setInnerText('timeoutLabel');
+		setInnerText('paramRuleFunctionLabel');
+		document.getElementById('paramRule').placeholder = chrome.i18n.getMessage('paramRule');
+		setInnerText('downloadProgressLabel');
+		setInnerText('successCntLabel');
+		setInnerText('errorCntLabel');
+		setInnerText('totalCntLabel');
+		setInnerText('batchSavePageAsTxt');
+		setInnerText('batchSavePageAsMd');
+		setInnerText('help');
+	}
+
+	pageI18n();
 
 	function saveOptions(key) {
 		//设置是否显示悬浮按钮
@@ -29,7 +77,7 @@ window.onload = function () {
 	function addRule(event) {
 		var isAdd = event.toElement.dataset.add=="true";
 		event.toElement.dataset.add ="true";
-		document.getElementById("addRule").innerText = "添加";
+		document.getElementById("addRule").innerText = chrome.i18n.getMessage('add');
 		var rule = {
 			urlPattern: getInputAndClear('urlPattern'),
 			titleSelector: getInputAndClear('titleSelector'),
@@ -59,11 +107,11 @@ window.onload = function () {
 			contentHtml += '<td><code>' + rules[i].contentSelector + '</code></td>';
 			contentHtml += '<td><code>' + buttonFeatureToString(rules[i].buttonFeature) + '</code></td>';
 			contentHtml += '<td>'+
-								'<button name="up" data-index="' + i + '">上移</button>' +
-								'<button name="down" data-index="' + i + '">下移</button>' +
-								'<button name="delete" data-index="' + i + '">删除</button>' +
-								'<button name="update" data-index="' + i + '">更新</button>' +
-								'<button name="copy" data-index="' + i + '">拷贝</button>' +
+								'<button name="up" data-index="' + i + '">' + chrome.i18n.getMessage('up') + '</button>' +
+								'<button name="down" data-index="' + i + '">' + chrome.i18n.getMessage('down') + '</button>' +
+								'<button name="delete" data-index="' + i + '">' + chrome.i18n.getMessage('delete') + '</button>' +
+								'<button name="update" data-index="' + i + '">' + chrome.i18n.getMessage('update') + '</button>' +
+								'<button name="copy" data-index="' + i + '">' + chrome.i18n.getMessage('copy') + '</button>' +
 							'</td>';
 			contentHtml += '</tr>';
 		}
