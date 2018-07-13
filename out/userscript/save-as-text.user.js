@@ -2,7 +2,7 @@
 // @name         Save As Text
 // @name:zh      保存为纯文本文件
 // @supportURL   https://github.com/rectcircle/save-as-text
-// @downloadURL  https://greasyfork.org/scripts/370270-userscript-save-as-text/code/Userscript+%20:%20Save%20As%20Text.user.js
+// @downloadURL  https://raw.githubusercontent.com/rectcircle/save-as-text/master/out/userscript/save-as-text.user.js
 // @namespace    https://github.com/rectcircle/save-as-text
 // @license      MIT
 // @version      1.0.0
