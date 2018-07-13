@@ -1,5 +1,12 @@
 # Save as Text
 
+## 项目说明
+本项目旨在打造一个可以保存网页为纯文本文件的浏览器扩展或用户脚本
+
+目前已经支持的浏览器为：
+* [Chrome扩展](https://github.com/rectcircle/save-as-text/releases/tag/v1.0.0)
+* [暴力猴用户脚本](#)
+
 ## 引用
 
 本项目使用很多第三方开源项目，列表如下
