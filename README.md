@@ -8,3 +8,13 @@
 * [html转markdown工具：turndown](https://github.com/domchristie/turndown)
 * [turndown插件](https://github.com/domchristie/turndown-plugin-gfm)
 
+## Chrome扩展权限说明
+* `contextMenus`，创建菜单
+* `tabs`，获取标签信息，以获取所有标签id，便于保存内容
+* `http://*/`，Ajax请求，批量下载页面
+* `https://*/`，Ajax请求，批量下载页面
+
+
+## 使用说明
+
+* [Chrome扩展](https://github.com/rectcircle/save-as-text/blob/master/guide.md)

@@ -3,6 +3,9 @@
 	"version": "1.0.0",
 	"manifest_version": 2,
 
+	"short_name": "save-as-text",
+	"author":"rectcircle",
+	"homepage_url": "https://github.com/rectcircle/save-as-text",
 	"description": "__MSG_extDescription__",
 	"icons": {
 		"16": "images/icon16.png",
