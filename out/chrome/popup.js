@@ -154,14 +154,14 @@ window.onload = function () {
 			setSelectOption("pageButtonFeature", rules[index].buttonFeature);
 			document.getElementById("addRule").dataset.index = index;
 			document.getElementById("addRule").dataset.add="false";
-			document.getElementById("addRule").innerText = "更新";
+			document.getElementById("addRule").innerText = chrome.i18n.getMessage('update');
 		} else if (ele.name == "copy") {
 			document.getElementById("urlPattern").value = rules[index].urlPattern;
 			document.getElementById("titleSelector").value = rules[index].titleSelector;
 			document.getElementById("contentSelector").value = rules[index].contentSelector;
 			setSelectOption("pageButtonFeature", rules[index].buttonFeature);
 			document.getElementById("addRule").dataset.add = "true";
-			document.getElementById("addRule").innerText = "添加";
+			document.getElementById("addRule").innerText = chrome.i18n.getMessage('add');
 		}
 	}
 
@@ -400,10 +400,10 @@ window.onload = function () {
 					saveAsText(title + '.' + fileType, contents.join('\n\n'));
 				}
 				if (errors.length!=0){
-					saveAsText("失败日志.txt", errors.join('\n\n'));
+					saveAsText(chrome.i18n.getMessage('failureLogFileName'), errors.join('\n\n'));
 				}
 				progress.value = progress.value + 1;
-				alert("下载完成：共需下载"+len+"，成功下载"+successCnt+"，失败下载"+errors.length+"。如有失败请查看`失败日志.txt`");
+				alert(chrome.i18n.getMessage("batchDownloadAlert", [len + "", successCnt + "", errors.length + "", chrome.i18n.getMessage('failureLogFileName')]))
 			}
 		} else {
 			downloader.ondowmloadone = function (index, isSuccess, title, content) {
@@ -414,10 +414,10 @@ window.onload = function () {
 			};
 			downloader.ondowmloadall = function (len, successCnt, errors, title, contents) {
 				if (errors.length!=0){
-					saveAsText("失败日志.txt", errors.join('\n\n'));
+					saveAsText(chrome.i18n.getMessage('failureLogFileName'), errors.join('\n\n'));
 				}
 				progress.value = progress.value + 1;
-				alert("下载完成：共需下载"+len+"，成功下载"+successCnt+"，失败下载"+errors.length+"。如有失败请查看`失败日志.txt`");
+				alert(chrome.i18n.getMessage("batchDownloadAlert", [len + "", successCnt + "", errors.length + "", chrome.i18n.getMessage('failureLogFileName')]))
 			};
 		}
 
@@ -452,7 +452,7 @@ window.onload = function () {
 					var interval = arr.slice(0);
 					for (var i = 0; i < interval.length; i++){
 						if (typeof (interval[i]) != 'number') {
-							throw "只能是数组元素只能是数字";
+							throw chrome.i18n.getMessage('mustBeNumberError');
 						}
 					}
 					if (interval.length == 1) {
@@ -462,13 +462,13 @@ window.onload = function () {
 						interval.push(1);
 					} else if (interval.length == 3){
 						if (interval[0] < interval[1] && interval[2]<0){
-							throw "当start<end时，则step>0"
+							throw chrome.i18n.getMessage('startLessEndError')
 						}
 						if (interval[0] > interval[1] && interval[2] > 0) {
-							throw "当start>end时，则step<0"
+							throw chrome.i18n.getMessage('startGreaterEndError');
 						}
 					} else {
-						throw "区间数组长度最大最小为1，最大为3"
+						throw chrome.i18n.getMessage('rangeLengthError');
 					}
 					intervals.push(interval);
 				}
@@ -492,7 +492,7 @@ window.onload = function () {
 								} else if (ranges[i] instanceof Array) {
 									handleArray(ranges[i]);
 								} else {
-									throw "数组元素只能是数字或者数组";
+									throw chrome.i18n.getMessage('mustBeNumberArrayError');
 								}
 							}
 						} else {
@@ -500,7 +500,7 @@ window.onload = function () {
 						}
 
 					} else {
-						throw "intervals只能是数字或数组";
+						throw chrome.i18n.getMessage('intervalsMustBeArray');
 					}
 				}
 
@@ -514,10 +514,10 @@ window.onload = function () {
 					if (ranges["intervals"]){
 						handleIntervals(ranges["intervals"]);
 					} else {
-						throw "必须包含intervals字段"
+						throw chrome.i18n.getMessage('NeedIntervals');
 					}
 				} else {
-					throw "区间规则类型错误（只能是对象、数组、数字）";
+					throw chrome.getMessage('rangeRuleError');
 				}
 
 				for (var i = 0; i < intervals.length; i++){
@@ -530,7 +530,7 @@ window.onload = function () {
 							save(j, title);
 						}
 					} else {
-						throw "step不能等于0";
+						throw chrome.i18n.getMessage('stepEqualZeroError');
 					}
 				}
 			}
@@ -545,7 +545,7 @@ window.onload = function () {
 				});
 			downloader.finish();
 		} catch (e) {
-			alert("规则存在语法错误：" + e);
+			alert(chrome.i18n.getMessage('hasSyntaxErrors') + e);
 			return;
 		}
 		
@@ -584,7 +584,7 @@ window.onload = function () {
 		//设置规则函数
 		document.getElementById("paramRule").value = paramRuleStr;
 
-		if (confirm("是否确认下载：\n格式-txt，保存为-单文件\n若要自定义配置，点击取消")){
+		if (confirm(chrome.i18n.getMessage('confirmDownload'))) {
 			setTimeout(function () {
 				batchSave('txt');
 			}, 500);

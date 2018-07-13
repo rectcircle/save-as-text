@@ -29,7 +29,7 @@
 		"message": "纯文本格式",
 		"description": "将选中内容添加到剪切板子项目"
 	},
-	"markdownFormat":{
+	"markdownFormat": {
 		"message": "Markdown格式",
 		"description": "将选中内容添加到剪切板子项目"
 	},
@@ -47,7 +47,7 @@
 	},
 
 
-	"copyToClipboardAlert":{
+	"copyToClipboardAlert": {
 		"message": "复制到剪切板成功",
 		"description": "复制到剪切板成功Alert"
 	},
@@ -62,6 +62,76 @@
 	"noSelectionAlert": {
 		"message": "您没有选择任何内容",
 		"description": "您没有选择任何内容Alert"
+	},
+	"failureLogFileName": {
+		"message": "失败日志.txt",
+		"description": "失败日志文件名"
+	},
+	"batchDownloadAlert": {
+		"message": "下载完成：\n共需下载$len$，成功下载$successCnt$，失败下载$errorLen$\n如有失败请查看 $failureLogfile$",
+		"description": "批量下载完成Alert",
+		"placeholders": {
+			"len": {
+				"content": "$1",
+				"example": "4"
+			},
+			"successCnt": {
+				"content": "$2",
+				"example": "3"
+			},
+			"errorLen": {
+				"content": "$3",
+				"example": "1"
+			},
+			"failureLogfile": {
+				"content": "$4",
+				"example": "失败日志.txt"
+			}
+		}
+	},
+	"mustBeNumberError": {
+		"message": "数组元素只能是数字",
+		"description": "数组元素只能是数字Error"
+	},
+	"startLessEndError": {
+		"message": "当start<end时，则step>0",
+		"description": "当start<end时，则step>0，Error"
+	},
+	"startGreaterEndError": {
+		"message": "当start>end时，则step<0",
+		"description": "当start>end时，则step<0，Error"
+	},
+	"rangeLengthError": {
+		"message": "区间数组长度最大最小为1，最大为3",
+		"description": "区间数组长度最大最小为1，最大为3，Error"
+	},
+	"mustBeNumberArrayError": {
+		"message": "数组元素只能是数字或者数组",
+		"description": "数组元素只能是数字或者数组Error"
+	},
+	"intervalsMustBeArray": {
+		"message": "intervals只能是数字或数组",
+		"description": "intervals只能是数字或数组Error"
+	},
+	"NeedIntervals": {
+		"message": "必须包含intervals字段",
+		"description": "必须包含intervals字段Error"
+	},
+	"rangeRuleError": {
+		"message": "区间规则类型错误（只能是对象、数组、数字）",
+		"description": "区间规则类型错误（只能是对象、数组、数字）Error"
+	},
+	"stepEqualZeroError": {
+		"message": "step不能等于0",
+		"description": "step不能等于0Error"
+	},
+	"hasSyntaxErrors": {
+		"message": "规则存在语法错误：",
+		"description": "规则存在语法错误Error"
+	},
+	"confirmDownload": {
+		"message": "是否确认下载：\n格式-txt，保存为-单文件\n若要自定义配置，点击取消",
+		"description": "确认下载"
 	},
 
 

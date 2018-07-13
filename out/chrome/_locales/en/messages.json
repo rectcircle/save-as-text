@@ -63,6 +63,76 @@
 		"message": "You have not selected anything content",
 		"description": "You have not selected anything content Alert"
 	},
+	"failureLogFileName": {
+		"message": "failureLog.txt",
+		"description": "Failure log file name"
+	},
+	"batchDownloadAlert": {
+		"message": "Download completed:\ntotal $len$, success $successCnt$，failture $errorLen$\nIf there is a failure, please see $failureLogfile$",
+		"description": "Batch download completed Alert",
+		"placeholders": {
+			"len": {
+				"content": "$1",
+				"example": "4"
+			},
+			"successCnt": {
+				"content": "$2",
+				"example": "3"
+			},
+			"errorLen": {
+				"content": "$3",
+				"example": "1"
+			},
+			"failureLogfile": {
+				"content": "$4",
+				"example": "failureLog.txt"
+			}
+		}
+	},
+	"mustBeNumberError": {
+		"message": "Array elements can only be numbers",
+		"description": "Array elements can only be numbers Error"
+	},
+	"startLessEndError": {
+		"message": "When start<end, then step>0",
+		"description": "When start<end, then step>0, Error"
+	},
+	"startGreaterEndError": {
+		"message": "When start>end, then step<0",
+		"description": "When start>end, then step<0, Error"
+	},
+	"rangeLengthError": {
+		"message": "Interval array length is up to a minimum of 1 and a maximum of 3",
+		"description": "Interval array length is up to a minimum of 1 and a maximum of 3, Error"
+	},
+	"mustBeNumberArrayError": {
+		"message": "Array elements can only be numbers or arrays",
+		"description": "Array elements can only be numbers or arrays, Error"
+	},
+	"intervalsMustBeArray": {
+		"message": "Intervals can only be numbers or arrays",
+		"description": "Intervals can only be numbers or arrays, Error"
+	},
+	"NeedIntervals": {
+		"message": "Must contain the interval field",
+		"description": "Must contain interval field, Error"
+	},
+	"rangeRuleError": {
+		"message": "Interval rule type error (can only be object, array, number)",
+		"description": "Interval rule type error (can only be object, array, number), error"
+	},
+	"stepEqualZeroError": {
+		"message": "Step cannot be equal to 0",
+		"description": "Step cannot be equal to 0, Error"
+	},
+	"hasSyntaxErrors": {
+		"message": "There is a syntax error in the rule:",
+		"description": "There is a syntax error in the rule, Error"
+	},
+	"confirmDownload": {
+		"message": "Whether to confirm the download: \nformat-txt, save as - single file\nTo customize the configuration, click Cancel",
+		"description": "Confirm download"
+	},
 
 
 	"optionTitle": {
