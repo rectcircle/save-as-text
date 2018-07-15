@@ -25,6 +25,10 @@ function saveAsText(fileName, content) {
 	};
 
 	//创建Blob对象
+	var pf = window.navigator.platform;
+	if (pf == "Win32" || pf == "Windows") {
+		content = '\uFEFF' + content;
+	}
 	var blob = new Blob([content], blobOptions);
 
 	//使用a标签下载文件
