@@ -5,7 +5,7 @@
 // @downloadURL  https://raw.githubusercontent.com/rectcircle/save-as-text/master/out/userscript/save-as-text.user.js
 // @namespace    https://github.com/rectcircle/save-as-text
 // @license      MIT
-// @version      1.0.0
+// @version      1.0.1
 // @description         Save the Page as Plain text file
 // @description:zh      将当前网页保存为纯文本文件
 // @author       Rectcircle <rectcircle96@gmail.com>
